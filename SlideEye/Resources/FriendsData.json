@@ -1,0 +1,45 @@
+[
+    {
+        "name": "Lara Croft",
+        "location": "Peruvian Jungle",
+        "country": "Peru",
+        "id": 1001,
+        "isFavorite": true,
+        "occupation": "Archeologist",
+        "coordinates": {
+            "longitude": -72.875,
+            "latitude": -10.125
+        },
+        "notes": "Archeologist who likes to get herself in danger",
+        "imageName": "LaraCroft"
+    },
+    {
+        "name": "Dani Rojas",
+        "location": "Yara",
+        "country": "Cuba",
+        "id": 1002,
+        "isFavorite": true,
+        "occupation": "Guerilla Fighter",
+        "coordinates": {
+            "longitude": -80,
+            "latitude": 21.5
+        },
+        "notes": "Viva Libertad!",
+        "imageName": "DaniRojas"
+    }
+    ,
+    {
+        "name": "Tifa Lockart",
+        "location": "Senate Video Conference",
+        "country": "Italy",
+        "id": 1003,
+        "isFavorite": false,
+        "occupation": "''Model''",
+        "coordinates": {
+            "longitude": 12,
+            "latitude": 43.14
+        },
+        "notes": "Mamma Mia!!!",
+        "imageName": "TifaLockart"
+    }
+]

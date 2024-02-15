@@ -1,15 +1,10 @@
-//
-//  FalloffImage.swift
-//  SlideEye
-//
-//  Created by Nicolas Helbig on 09.02.24.
-//
-
 import SwiftUI
 
 struct FalloffImage: View {
+    var image: Image
+    
     var body: some View {
-        Image("LaraCroft")
+        image
             .resizable()
             .aspectRatio(contentMode: .fill)
             .clipShape(Rectangle())
@@ -22,5 +17,5 @@ struct FalloffImage: View {
 }
 
 #Preview {
-    FalloffImage()
+    FalloffImage(image: Image("LaraCroft"))
 }
