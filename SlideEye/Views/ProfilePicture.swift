@@ -5,9 +5,12 @@ struct ProfilePicture: View {
     
     var body: some View {
         image
+            .resizable()
+            .frame(width: 50, height: 50)
+            .scaledToFill()
             .clipShape(Circle())
             .overlay{
-                Circle().stroke(.white, lineWidth: 4)
+                Circle().stroke(.gray, lineWidth: 1)
             }
             .shadow(radius: 7)
     }

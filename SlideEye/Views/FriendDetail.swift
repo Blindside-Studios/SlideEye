@@ -4,17 +4,17 @@ struct FriendDetail: View {
     var friend: Friend
     
     var body: some View {
-        ScrollView {
-            VStack {
+        GeometryReader { geometry in
+            ScrollView {
                 FalloffImage(image: friend.profilePicture)
-                 .mask(LinearGradient(gradient: Gradient(stops: [
-                 .init(color: .black, location: 0),
-                 .init(color: .black, location: 0.75),
-                 .init(color: .clear, location: 1)
-                 ]), startPoint: .top, endPoint: .bottom))
-                 .padding(-60)
-                 .frame(height: 200)
-                 Spacer(minLength: 70)
+                    .mask(LinearGradient(gradient: Gradient(stops: [
+                        .init(color: .black, location: 0),
+                        .init(color: .black, location: 0.75),
+                        .init(color: .clear, location: 1)
+                    ]), startPoint: .top, endPoint: .bottom))
+                    .padding(-60)
+                    .frame(height: 230)
+                Spacer(minLength: 70)
                 VStack(alignment: .leading) {
                     Text(friend.name)
                         .font(.largeTitle)
@@ -40,9 +40,13 @@ struct FriendDetail: View {
                     }
                     Text(friend.notes)
                         .font(.caption)
+                    
+                    ForEach(1...20, id: \.self) { index in
+                        Text("Test Item \(index)")
+                            .padding()
+                    }
                 }
                 .padding(20)
-            
             }
         }
     }

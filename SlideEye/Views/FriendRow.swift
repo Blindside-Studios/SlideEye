@@ -5,8 +5,8 @@ struct FriendRow: View {
     
     var body: some View {
         HStack {
-            friend.profilePicture
-                .resizable()
+            ProfilePicture(image: friend.profilePicture)
+                .clipShape(Circle())
                 .frame(width:50, height:50)
             Text(friend.name)
             Spacer()
