@@ -1,6 +1,10 @@
 import Foundation
 
-var friends: [Friend] = load("FriendsData.json")
+@Observable
+class ModelData
+{
+    var friends: [Friend] = load("FriendsData.json")
+}
 
 func load<T: Decodable>(_ filename: String) -> T {
     let data: Data

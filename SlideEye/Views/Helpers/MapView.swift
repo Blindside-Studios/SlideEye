@@ -17,5 +17,5 @@ struct MapView: View {
 }
 
 #Preview {
-    MapView(coordinate: friends[0].locationCoordinate)
+    MapView(coordinate: ModelData().friends[0].locationCoordinate)
 }
