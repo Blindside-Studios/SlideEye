@@ -3,9 +3,13 @@ import SwiftUI
 struct FriendDetail: View {
     var friend: Friend
     
+    @State var shouldPresentMapSheet = false
+    
     var body: some View {
-        GeometryReader { geometry in
-            ScrollView {
+        GeometryReader 
+        { geometry in
+            ScrollView
+            {
                 FalloffImage(image: friend.profilePicture)
                     .mask(LinearGradient(gradient: Gradient(stops: [
                         .init(color: .black, location: 0),
@@ -15,10 +19,12 @@ struct FriendDetail: View {
                     .padding(-60)
                     .frame(height: 230)
                 Spacer(minLength: 70)
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading) 
+                {
                     Text(friend.name)
                         .font(.largeTitle)
-                    HStack {
+                    HStack 
+                    {
                         Text(friend.location)
                             .font(.subheadline)
                         Spacer()
@@ -27,13 +33,41 @@ struct FriendDetail: View {
                     }
                 }
                 .padding()
-                MapView(coordinate: friend.locationCoordinate)
-                    .frame(height: 200)
-                    .cornerRadius(25)
-                    .padding(10)
                 
-                VStack(alignment: .leading) {
-                    HStack {
+                MapView(coordinate: friend.locationCoordinate)
+                .frame(height: 200)
+                .cornerRadius(25)
+                .padding(10)
+                .gesture(TapGesture().onEnded {
+                    shouldPresentMapSheet.toggle()
+                })
+                .sheet(isPresented: $shouldPresentMapSheet){
+                    print("Sheet dimissed!")
+                } content: {
+                    ZStack{
+                        MapView(coordinate: friend.locationCoordinate)
+                            .padding(-1)
+                        VStack{
+                            ZStack{
+                                Rectangle()
+                                    .background(.ultraThinMaterial)
+                                    .frame(height: 50)
+                                HStack{
+                                    Text(friend.name+"'s location")
+                                    Spacer()
+                                    Button("Done") { shouldPresentMapSheet.toggle() }
+                                }
+                                .padding(15)
+                            }
+                            Spacer()
+                        }
+                    }
+                }
+                
+                VStack(alignment: .leading) 
+                {
+                    HStack
+                    {
                         Text("Notes")
                             .font(.headline)
                         Spacer()
