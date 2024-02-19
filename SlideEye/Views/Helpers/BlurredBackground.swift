@@ -15,9 +15,10 @@ struct BlurredBackground: View {
             .resizable()
             .padding(.vertical, -75)
             .padding(.horizontal, 0)
-            .blur(radius: 200)
-            .opacity(0.25)
-            .saturation(5)
+            .blur(radius: 50, opaque: true)
+            .opacity(0.5) // change via mask when applied
+            .brightness(0.01)
+            .saturation(1.5)
     }
 }
 

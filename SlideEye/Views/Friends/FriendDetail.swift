@@ -27,8 +27,9 @@ struct FriendDetail: View {
                         .scaledToFit()
                         .mask(LinearGradient(gradient: Gradient(stops: [
                             .init(color: .clear, location: 0),
-                            .init(color: .black, location: 0.25),
-                            .init(color: .black, location: 0.75),
+                            .init(color: .gray, location: 0.25),
+                            .init(color: .black, location: 0.33),
+                            .init(color: .black, location: 0.9),
                             .init(color: .clear, location: 1)
                         ]), startPoint: .top, endPoint: .bottom))
                         .padding(.vertical, -25)
@@ -48,6 +49,31 @@ struct FriendDetail: View {
                     }
                 }
                 
+                VStack(alignment: .leading)
+                {
+                    ZStack
+                    {
+                        Rectangle()
+                            .frame(height: 200)
+                            .background(.regularMaterial)
+                            .cornerRadius(25)
+                        
+                        Group
+                        {
+                            VStack
+                            {
+                                Text("Notes")
+                                    .font(.headline)
+                                    .frame(alignment: .leading)
+                                Text(friend.notes)
+                                    .font(.caption)
+                                    .frame(alignment: .leading)
+                            }
+                        }
+                    }
+                }
+                .padding(20)
+                
                 MapView(coordinate: friend.locationCoordinate)
                     .frame(height: 200)
                     .cornerRadius(25)
@@ -56,7 +82,6 @@ struct FriendDetail: View {
                         shouldPresentMapSheet.toggle()
                     })
                     .sheet(isPresented: $shouldPresentMapSheet){
-                        print("Sheet dimissed!")
                     } content: {
                         ZStack{
                             MapView(coordinate: friend.locationCoordinate)
@@ -78,23 +103,6 @@ struct FriendDetail: View {
                         }
                     }
                 
-                VStack(alignment: .leading)
-                {
-                    HStack
-                    {
-                        Text("Notes")
-                            .font(.headline)
-                        Spacer()
-                    }
-                    Text(friend.notes)
-                        .font(.caption)
-                    
-                    ForEach(1...20, id: \.self) { index in
-                        Text("Test Item \(index)")
-                            .padding()
-                    }
-                }
-                .padding(20)
             }
             .navigationTitle(friend.name)
             .navigationBarTitleDisplayMode(.large)
