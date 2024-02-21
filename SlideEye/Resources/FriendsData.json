@@ -2,13 +2,14 @@
     {
         "name": "Lara Croft",
         "location": "Peruvian Jungle",
+        "city": "Lima",
         "country": "Peru",
         "id": 1001,
         "isFavorite": true,
         "occupation": "Archeologist",
         "coordinates": {
-            "longitude": -72.875,
-            "latitude": -10.125
+            "longitude": -77.030864,
+            "latitude": -12.045448
         },
         "notes": "Archeologist who likes to get herself in danger",
         "imageName": "LaraCroft"
@@ -16,13 +17,14 @@
     {
         "name": "Dani Rojas",
         "location": "Yara",
+        "city": "Banes",
         "country": "Cuba",
         "id": 1002,
         "isFavorite": true,
         "occupation": "Guerilla Fighter",
         "coordinates": {
-            "longitude": -80,
-            "latitude": 21.5
+            "longitude": -75.713628,
+            "latitude": 20.962649
         },
         "notes": "Viva Libertad!",
         "imageName": "DaniRojas"
@@ -31,13 +33,14 @@
     {
         "name": "Tifa Lockart",
         "location": "Senate Video Conference",
+        "city": "Castiglione del Lago",
         "country": "Italy",
         "id": 1003,
         "isFavorite": false,
         "occupation": "''Model''",
         "coordinates": {
-            "longitude": 12,
-            "latitude": 43.14
+            "longitude": 12.048826,
+            "latitude": 43.126518
         },
         "notes": "Mamma Mia!!!",
         "imageName": "TifaLockart"

@@ -9,6 +9,7 @@ struct Friend: Hashable, Codable, Identifiable{
     var name: String
     var occupation: String
     var location: String
+    var city: String // used for weather
     var country: String
     var isFavorite: Bool
     var notes: String

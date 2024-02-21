@@ -5,11 +5,18 @@ struct FriendDetail: View {
     var friend: Friend
     
     @State private var shouldPresentMapSheet = false
+    @State private var shouldPresentNotesSheet = false
+    @State private var friendNotes: String
     
     var friendIndex: Int
     {
         modelData.friends.firstIndex(where: { $0.id == friend.id })!
     }
+    
+    init(friend: Friend) {
+            self.friend = friend
+            _friendNotes = State(initialValue: friend.notes)
+        }
     
     var body: some View {
         @Bindable var modelData = modelData
@@ -49,30 +56,32 @@ struct FriendDetail: View {
                     }
                 }
                 
-                VStack(alignment: .leading)
-                {
-                    ZStack
-                    {
-                        Rectangle()
-                            .frame(height: 200)
-                            .background(.regularMaterial)
-                            .cornerRadius(25)
-                        
-                        Group
-                        {
-                            VStack
-                            {
-                                Text("Notes")
-                                    .font(.headline)
-                                    .frame(alignment: .leading)
-                                Text(friend.notes)
-                                    .font(.caption)
-                                    .frame(alignment: .leading)
+                NotesWidget(notes: $friendNotes)
+                    .padding(20)
+                    .gesture(TapGesture().onEnded{
+                        shouldPresentNotesSheet.toggle()
+                    })
+                    .sheet(isPresented: $shouldPresentNotesSheet){
+                    } content: {
+                        ZStack{
+                            NotesPage(friendName: friend.name, backgroundImage: friend.profilePicture, notes: $friendNotes)
+                                .padding(-1)
+                            VStack{
+                                ZStack{
+                                    Rectangle()
+                                        .foregroundStyle(.bar)
+                                        .frame(height: 50)
+                                    HStack{
+                                        Text(friend.name+"'s notes")
+                                        Spacer()
+                                        Button("Done") { shouldPresentNotesSheet.toggle() }
+                                    }
+                                    .padding(15)
+                                }
+                                Spacer()
                             }
                         }
                     }
-                }
-                .padding(20)
                 
                 MapView(coordinate: friend.locationCoordinate)
                     .frame(height: 200)

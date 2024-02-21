@@ -13,7 +13,7 @@ struct BlurredBackground: View {
     var body: some View {
         image
             .resizable()
-            .padding(.vertical, -75)
+            .padding(.vertical, -150)
             .padding(.horizontal, 0)
             .blur(radius: 50, opaque: true)
             .opacity(0.5) // change via mask when applied
