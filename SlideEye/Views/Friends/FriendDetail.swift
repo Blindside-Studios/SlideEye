@@ -24,6 +24,7 @@ struct FriendDetail: View {
         ZStack
         {
             BlurredBackground(image: friend.profilePicture)
+                .opacity(0.7)
             
             ScrollView
             {

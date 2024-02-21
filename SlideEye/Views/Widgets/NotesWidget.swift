@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NotesWidget: View {
     @Binding var notes: String
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         Group
@@ -11,6 +12,8 @@ struct NotesWidget: View {
                 Rectangle()
                     .frame(height: 200)
                     .background(.regularMaterial)
+                    .blur(radius: 3.0, opaque: true)
+                    .opacity(colorScheme == .dark ? 0.7 : 0.5)
                     .cornerRadius(25)
                 
                 VStack
