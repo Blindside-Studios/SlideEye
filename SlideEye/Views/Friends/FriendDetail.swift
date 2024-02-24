@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct FriendDetail: View {
-    @Environment(ModelData.self) var modelData // this line makes the preview crash
+    @Environment(ModelData.self) var modelData
     var friend: Friend
     
     @State private var shouldPresentMapSheet = false
@@ -58,10 +58,12 @@ struct FriendDetail: View {
                 }
                 
                 ClockWidget(timeZoneID: friend.timeZoneID)
-                    .padding(20)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 5)
                 
                 NotesWidget(notes: $friendNotes)
-                    .padding(20)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 5)
                     .gesture(TapGesture().onEnded{
                         shouldPresentNotesSheet.toggle()
                     })
@@ -90,7 +92,8 @@ struct FriendDetail: View {
                 MapView(coordinate: friend.locationCoordinate)
                     .frame(height: 200)
                     .cornerRadius(25)
-                    .padding(.horizontal)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 5)
                     .gesture(TapGesture().onEnded {
                         shouldPresentMapSheet.toggle()
                     })
@@ -109,7 +112,7 @@ struct FriendDetail: View {
                                         Spacer()
                                         Button("Done") { shouldPresentMapSheet.toggle() }
                                     }
-                                    .padding(15)
+                                    .padding(.horizontal, 15)
                                 }
                                 Spacer()
                             }
