@@ -14,9 +14,9 @@ struct FriendDetail: View {
     }
     
     init(friend: Friend) {
-            self.friend = friend
-            _friendNotes = State(initialValue: friend.notes)
-        }
+        self.friend = friend
+        _friendNotes = State(initialValue: friend.notes)
+    }
     
     var body: some View {
         @Bindable var modelData = modelData
@@ -116,6 +116,11 @@ struct FriendDetail: View {
             }
             .navigationTitle(friend.name)
             .navigationBarTitleDisplayMode(.large)
+        }
+        .onChange(of: shouldPresentNotesSheet) { newValue in
+            if !newValue {
+                modelData.saveChanges(friend: friend, index: friendIndex)
+            }
         }
     }
 }
