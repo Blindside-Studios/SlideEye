@@ -57,6 +57,9 @@ struct FriendDetail: View {
                     }
                 }
                 
+                ClockWidget(timeZoneID: friend.timeZoneID)
+                    .padding(20)
+                
                 NotesWidget(notes: $friendNotes)
                     .padding(20)
                     .gesture(TapGesture().onEnded{
@@ -117,11 +120,12 @@ struct FriendDetail: View {
             .navigationTitle(friend.name)
             .navigationBarTitleDisplayMode(.large)
         }
-        .onChange(of: shouldPresentNotesSheet) { newValue in
+        // TODO: Reenable this after finding a non-deprecated alternative, low priority
+        /*.onChange(of: shouldPresentNotesSheet) { newValue in
             if !newValue {
                 modelData.saveChanges(friend: friend, index: friendIndex)
             }
-        }
+        }*/
     }
 }
 

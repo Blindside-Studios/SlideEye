@@ -17,6 +17,7 @@
 		0A4016502B75BA6A00B610F3 /* FalloffImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A40164F2B75BA6A00B610F3 /* FalloffImage.swift */; };
 		0A4A90A42B8485410002BBC9 /* NotesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90A32B8485400002BBC9 /* NotesWidget.swift */; };
 		0A4A90A72B848FAA0002BBC9 /* NotesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90A62B848FAA0002BBC9 /* NotesPage.swift */; };
+		0A4A90A92B896A460002BBC9 /* ClockWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90A82B896A460002BBC9 /* ClockWidget.swift */; };
 		0A67013E2B828A3D0055113F /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A67013D2B828A3D0055113F /* FavoriteButton.swift */; };
 		0AB2F2A92B7D84E0006DEF00 /* FriendsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AB2F2A82B7D84E0006DEF00 /* FriendsData.json */; };
 		0AB2F2AB2B7D85AB006DEF00 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB2F2AA2B7D85AB006DEF00 /* Friend.swift */; };
@@ -38,6 +39,7 @@
 		0A40164F2B75BA6A00B610F3 /* FalloffImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FalloffImage.swift; sourceTree = "<group>"; };
 		0A4A90A32B8485400002BBC9 /* NotesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesWidget.swift; sourceTree = "<group>"; };
 		0A4A90A62B848FAA0002BBC9 /* NotesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPage.swift; sourceTree = "<group>"; };
+		0A4A90A82B896A460002BBC9 /* ClockWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockWidget.swift; sourceTree = "<group>"; };
 		0A67013D2B828A3D0055113F /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		0AB2F2A82B7D84E0006DEF00 /* FriendsData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FriendsData.json; sourceTree = "<group>"; };
 		0AB2F2AA2B7D85AB006DEF00 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		0A4A90A52B8485EF0002BBC9 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
+				0A4A90A82B896A460002BBC9 /* ClockWidget.swift */,
 				0A4A90A32B8485400002BBC9 /* NotesWidget.swift */,
 				0A4A90A62B848FAA0002BBC9 /* NotesPage.swift */,
 				0A40164D2B75B7FB00B610F3 /* MapView.swift */,
@@ -227,6 +230,7 @@
 			files = (
 				0A4016402B75B44D00B610F3 /* ContentView.swift in Sources */,
 				0A40164E2B75B7FB00B610F3 /* MapView.swift in Sources */,
+				0A4A90A92B896A460002BBC9 /* ClockWidget.swift in Sources */,
 				0AB2F2B52B7D883E006DEF00 /* FriendRow.swift in Sources */,
 				0A40164C2B75B70900B610F3 /* ProfilePicture.swift in Sources */,
 				0AB2F2B92B7D8A28006DEF00 /* FriendDetail.swift in Sources */,
