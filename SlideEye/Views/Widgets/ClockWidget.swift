@@ -4,6 +4,8 @@ import Foundation
 struct ClockWidget: View {
     var timeZoneID: String
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var timeZone: TimeZone? {
         return TimeZone(identifier: timeZoneID)
     }
@@ -18,39 +20,35 @@ struct ClockWidget: View {
     
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-    var dayOfWeekNames: [String] = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    var dayOfWeekNames: [String] = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
     
     var body: some View {
         ZStack
         {
             Rectangle()
-                .blur(radius: 2.0, opaque: true)
-            Rectangle()
-                .fill(.blue)
-                .background(.blue)
-                .opacity(0.5)
+                .background(colorScheme == .dark ? .ultraThinMaterial: .regularMaterial)
+                .brightness(colorScheme == .dark ? -0.2: 0.2)
+            
+            AnalogueClock(days: $day, hours: $hour, minutes: $minute, seconds: $second)
+                .frame(height: 200)
             
             HStack
             {
                 VStack
                 {
-                    HStack
-                    {
-                        Text("\(hour):\(String(format: "%02d", minute))")
-                            .font(.system(size: 60))
-                            .fontWeight(.heavy)
-                            .onAppear{
-                                setDateComponents()
-                            }
-                            .onReceive(timer) { _ in
-                                            setDateComponents()
-                                        }
-                        Text(":\(second)")
-                            .font(.title)
-                            .frame(alignment: .bottomLeading)
-                    }
+                    Text("\(hour):\(String(format: "%02d", minute))")
+                        .font(.system(size: 60))
+                        .fontWeight(.heavy)
+                        .shadow(radius: 5)
+                        .onAppear{
+                            setDateComponents()
+                        }
+                        .onReceive(timer) { _ in
+                            setDateComponents()
+                        }
                     Text("\(dayOfWeekNames[dayOfWeek-1]), \(month)/\(day)/\(String(format: "%d", year))")
                         .font(.title3)
+                        .shadow(radius: 5)
                 }
                 .frame(alignment: .trailing)
                 .padding(.vertical, 20)
@@ -90,5 +88,5 @@ struct ClockWidget: View {
 }
 
 #Preview {
-    ClockWidget(timeZoneID: "America/New_York")
+    ClockWidget(timeZoneID: "Europe/Rome")
 }

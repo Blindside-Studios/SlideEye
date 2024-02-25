@@ -18,6 +18,9 @@
 		0A4A90A42B8485410002BBC9 /* NotesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90A32B8485400002BBC9 /* NotesWidget.swift */; };
 		0A4A90A72B848FAA0002BBC9 /* NotesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90A62B848FAA0002BBC9 /* NotesPage.swift */; };
 		0A4A90A92B896A460002BBC9 /* ClockWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90A82B896A460002BBC9 /* ClockWidget.swift */; };
+		0A4A90B02B8A45F70002BBC9 /* ClockHand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90AF2B8A45F70002BBC9 /* ClockHand.swift */; };
+		0A4A90B22B8A49520002BBC9 /* AnalogueClock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A90B12B8A49520002BBC9 /* AnalogueClock.swift */; };
+		0A5D4B6C2B8A9F1A00053A47 /* ClockBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5D4B6B2B8A9F1A00053A47 /* ClockBackground.swift */; };
 		0A67013E2B828A3D0055113F /* FavoriteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A67013D2B828A3D0055113F /* FavoriteButton.swift */; };
 		0AB2F2A92B7D84E0006DEF00 /* FriendsData.json in Resources */ = {isa = PBXBuildFile; fileRef = 0AB2F2A82B7D84E0006DEF00 /* FriendsData.json */; };
 		0AB2F2AB2B7D85AB006DEF00 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB2F2AA2B7D85AB006DEF00 /* Friend.swift */; };
@@ -40,6 +43,9 @@
 		0A4A90A32B8485400002BBC9 /* NotesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesWidget.swift; sourceTree = "<group>"; };
 		0A4A90A62B848FAA0002BBC9 /* NotesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesPage.swift; sourceTree = "<group>"; };
 		0A4A90A82B896A460002BBC9 /* ClockWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockWidget.swift; sourceTree = "<group>"; };
+		0A4A90AF2B8A45F70002BBC9 /* ClockHand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockHand.swift; sourceTree = "<group>"; };
+		0A4A90B12B8A49520002BBC9 /* AnalogueClock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalogueClock.swift; sourceTree = "<group>"; };
+		0A5D4B6B2B8A9F1A00053A47 /* ClockBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockBackground.swift; sourceTree = "<group>"; };
 		0A67013D2B828A3D0055113F /* FavoriteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteButton.swift; sourceTree = "<group>"; };
 		0AB2F2A82B7D84E0006DEF00 /* FriendsData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FriendsData.json; sourceTree = "<group>"; };
 		0AB2F2AA2B7D85AB006DEF00 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
@@ -111,6 +117,9 @@
 		0A67013F2B828BBB0055113F /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0A4A90B12B8A49520002BBC9 /* AnalogueClock.swift */,
+				0A4A90AF2B8A45F70002BBC9 /* ClockHand.swift */,
+				0A5D4B6B2B8A9F1A00053A47 /* ClockBackground.swift */,
 				0A40164B2B75B70900B610F3 /* ProfilePicture.swift */,
 				0A40164F2B75BA6A00B610F3 /* FalloffImage.swift */,
 				0A67013D2B828A3D0055113F /* FavoriteButton.swift */,
@@ -229,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A4016402B75B44D00B610F3 /* ContentView.swift in Sources */,
+				0A4A90B02B8A45F70002BBC9 /* ClockHand.swift in Sources */,
 				0A40164E2B75B7FB00B610F3 /* MapView.swift in Sources */,
 				0A4A90A92B896A460002BBC9 /* ClockWidget.swift in Sources */,
 				0AB2F2B52B7D883E006DEF00 /* FriendRow.swift in Sources */,
@@ -238,8 +248,10 @@
 				0A3910552B829F6100A7D5E3 /* BlurredBackground.swift in Sources */,
 				0AB2F2B72B7D8936006DEF00 /* FriendsList.swift in Sources */,
 				0A40163E2B75B44D00B610F3 /* SlideEyeApp.swift in Sources */,
+				0A4A90B22B8A49520002BBC9 /* AnalogueClock.swift in Sources */,
 				0A4016502B75BA6A00B610F3 /* FalloffImage.swift in Sources */,
 				0A4A90A72B848FAA0002BBC9 /* NotesPage.swift in Sources */,
+				0A5D4B6C2B8A9F1A00053A47 /* ClockBackground.swift in Sources */,
 				0A4A90A42B8485410002BBC9 /* NotesWidget.swift in Sources */,
 				0A67013E2B828A3D0055113F /* FavoriteButton.swift in Sources */,
 				0AB2F2AF2B7D876B006DEF00 /* ModelData.swift in Sources */,

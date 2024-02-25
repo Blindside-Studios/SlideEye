@@ -9,7 +9,7 @@ struct NotesPage: View {
         ZStack
         {
             BlurredBackground(image: backgroundImage)
-                .opacity(0.3)
+                .opacity(0.4)
             ScrollView{
                 TextField("Take notes on \(friendName) here", text: $notes)
                     .padding(.vertical, 70)

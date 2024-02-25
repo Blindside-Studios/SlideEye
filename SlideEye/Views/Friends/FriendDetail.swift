@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FriendDetail: View {
     @Environment(ModelData.self) var modelData
+    @Environment(\.colorScheme) var colorScheme
     var friend: Friend
     
     @State private var shouldPresentMapSheet = false
@@ -24,7 +25,6 @@ struct FriendDetail: View {
         ZStack
         {
             BlurredBackground(image: friend.profilePicture)
-                .opacity(0.7)
             
             ScrollView
             {
@@ -48,6 +48,7 @@ struct FriendDetail: View {
                         HStack
                         {
                             Text(friend.location + ", " + friend.country)
+                                .fontWeight(.bold)
                             Spacer()
                             FavoriteButton(isSet: $modelData.friends[friendIndex].isFavorite)
                         }
@@ -60,10 +61,12 @@ struct FriendDetail: View {
                 ClockWidget(timeZoneID: friend.timeZoneID)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 5)
+                    .shadow(radius: 10)
                 
                 NotesWidget(notes: $friendNotes)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 5)
+                    .shadow(radius: 10)
                     .gesture(TapGesture().onEnded{
                         shouldPresentNotesSheet.toggle()
                     })
@@ -94,6 +97,9 @@ struct FriendDetail: View {
                     .cornerRadius(25)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 5)
+                    .shadow(radius: 10)
+                    .saturation( colorScheme == .dark ?  0.7: 0.1)
+                    .opacity(0.85)
                     .gesture(TapGesture().onEnded {
                         shouldPresentMapSheet.toggle()
                     })
