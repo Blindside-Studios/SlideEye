@@ -29,10 +29,17 @@ struct Friend: Hashable, Codable, Identifiable{
                 latitude: coordinates.latitude,
                 longitude: coordinates.longitude)
         }
-    
     // location structure
     struct Coordinates: Hashable, Codable {
         var latitude: Double
         var longitude: Double
+    }
+    
+    
+    var quotes: [Quote]
+    
+    public struct Quote: Hashable, Codable {
+        var text: String
+        var year: Int
     }
 }

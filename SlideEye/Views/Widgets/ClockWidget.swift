@@ -26,8 +26,8 @@ struct ClockWidget: View {
         ZStack
         {
             Rectangle()
-                .background(colorScheme == .dark ? .ultraThinMaterial: .regularMaterial)
-                .brightness(colorScheme == .dark ? -0.2: 0.2)
+                .background(.regularMaterial)
+                .brightness(colorScheme == .dark ? -0.25: 0.3)
             
             AnalogueClock(days: $day, hours: $hour, minutes: $minute, seconds: $second)
                 .frame(height: 200)

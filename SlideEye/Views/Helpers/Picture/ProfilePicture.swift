@@ -7,7 +7,7 @@ struct ProfilePicture: View {
         image
             .resizable()
             .frame(width: 50, height: 50)
-            .scaledToFill()
+            .scaledToFit()
             .clipShape(Circle())
             .overlay{
                 Circle().stroke(.gray, lineWidth: 1)
@@ -17,5 +17,5 @@ struct ProfilePicture: View {
 }
 
 #Preview {
-    ProfilePicture(image: Image("LaraCroft"))
+    ProfilePicture(image: Image("1001"))
 }

@@ -11,10 +11,8 @@ struct NotesWidget: View {
             {
                 Rectangle()
                     .frame(height: 200)
-                    .background(colorScheme == .dark ? .thinMaterial: .regularMaterial)
-                    .cornerRadius(25)
-                    .brightness(colorScheme == .dark ? -0.3: 0.45)
-                    .saturation(colorScheme == .dark ?  0.6: 0.0)
+                    .background(.regularMaterial)
+                    .brightness(colorScheme == .dark ? -0.3: 0.4)
                 
                 VStack
                 {
@@ -49,6 +47,7 @@ struct NotesWidget: View {
             }
         }
         .frame(height: 200)
+        .clipShape(RoundedRectangle(cornerRadius: 25))
     }
 }
 

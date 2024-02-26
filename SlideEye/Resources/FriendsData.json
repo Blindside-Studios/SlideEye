@@ -14,7 +14,21 @@
             "latitude": -12.045448
         },
         "notes": "Archeologist who likes to get herself in danger",
-        "imageName": "LaraCroft"
+        "quotes": [
+                {
+                    "text": "You don't know how far I've come.",
+                    "year": 2016
+                },
+                {
+                    "text": "I hate tombs...",
+                    "year": 2013
+                },
+                {
+                    "text": "I woke up this morning and I just hated everything.",
+                    "year": 2001
+                }
+            ],
+        "imageName": "1001"
     },
     {
         "name": "Dani Rojas",
@@ -31,9 +45,18 @@
             "latitude": 20.962649
         },
         "notes": "Viva Libertad!",
-        "imageName": "DaniRojas"
-    }
-    ,
+        "quotes": [
+                {
+                    "text": "When Tyranny Is Law. Revolution Is Order.",
+                    "year": 2021
+                },
+                {
+                    "text": "No.",
+                    "year": 2021
+                }
+            ],
+        "imageName": "1002"
+    },
     {
         "name": "Tifa Lockart",
         "location": "Senate Video Conference",
@@ -49,6 +72,16 @@
             "latitude": 43.126518
         },
         "notes": "Mamma Mia!!!",
-        "imageName": "TifaLockart"
+        "quotes": [
+                {
+                    "text": "If I'm Ever Trapped Or In Trouble... Promise You'll Come And Save Me.",
+                    "year": 1997
+                },
+                {
+                    "text": "I Feel Trapped.",
+                    "year": 1997
+                }
+            ],
+        "imageName": "1003"
     }
 ]

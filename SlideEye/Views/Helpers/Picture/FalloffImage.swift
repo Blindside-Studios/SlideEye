@@ -17,5 +17,5 @@ struct FalloffImage: View {
 }
 
 #Preview {
-    FalloffImage(image: Image("LaraCroft"))
+    FalloffImage(image: Image("1001"))
 }

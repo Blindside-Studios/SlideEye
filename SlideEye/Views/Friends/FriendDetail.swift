@@ -7,6 +7,7 @@ struct FriendDetail: View {
     
     @State private var shouldPresentMapSheet = false
     @State private var shouldPresentNotesSheet = false
+    @State private var shouldPresentQuotesSheet = false
     @State private var friendNotes: String
     
     var friendIndex: Int
@@ -92,6 +93,35 @@ struct FriendDetail: View {
                         }
                     }
                 
+                QuotesWidget(name: friend.name, quote: friend.quotes[0], profilePicture: friend.profilePicture)
+                    .padding(.horizontal, 15)
+                    .padding(.vertical, 5)
+                    .shadow(radius: 10)
+                    .gesture(TapGesture().onEnded {
+                        shouldPresentQuotesSheet.toggle()
+                    })
+                    .sheet(isPresented: $shouldPresentQuotesSheet){
+                    } content: {
+                        ZStack{
+                            QuotesPage()
+                                .padding(-1)
+                            VStack{
+                                ZStack{
+                                    Rectangle()
+                                        .foregroundStyle(.bar)
+                                        .frame(height: 50)
+                                    HStack{
+                                        Text(friend.name+"'s quotes")
+                                        Spacer()
+                                        Button("Done") { shouldPresentQuotesSheet.toggle() }
+                                    }
+                                    .padding(.horizontal, 15)
+                                }
+                                Spacer()
+                            }
+                        }
+                    }
+                
                 MapView(coordinate: friend.locationCoordinate)
                     .frame(height: 200)
                     .cornerRadius(25)
@@ -124,7 +154,6 @@ struct FriendDetail: View {
                             }
                         }
                     }
-                
             }
             .navigationTitle(friend.name)
             .navigationBarTitleDisplayMode(.large)

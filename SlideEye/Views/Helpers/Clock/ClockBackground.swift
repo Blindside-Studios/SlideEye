@@ -10,7 +10,7 @@ struct ClockBackground: View {
                 .stroke(AngularGradient(gradient: Gradient(colors: [ Color.clear, colorScheme == .dark ?  Color.black: Color.white]), center: .center), lineWidth: 350)
                 .frame(width: 350, height: 350)
                 .rotationEffect(Angle(degrees: 270))
-                .opacity(0.8)
+                .opacity(colorScheme == .dark ? 0.8: 1)
                 }
     }
 }
