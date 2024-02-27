@@ -2,7 +2,7 @@ import SwiftUI
 
 struct QuotesWidget: View {
     var name: String
-    var quote: Friend.Quote
+    @Binding var quote: Friend.Quote
     var profilePicture: Image
     
     @Environment(\.colorScheme) var colorScheme
@@ -61,5 +61,5 @@ struct QuotesWidget: View {
 }
 
 #Preview {
-    QuotesWidget(name: "Lara Croft", quote: Friend.Quote(text: "Fuck you, Rourke!", year: 2018), profilePicture: Image("1001"))
+    QuotesWidget(name: "Lara Croft", quote: .constant(Friend.Quote(id: 00000, text: "Fuck you, Rourke!", year: 2018)), profilePicture: Image("1001"))
 }

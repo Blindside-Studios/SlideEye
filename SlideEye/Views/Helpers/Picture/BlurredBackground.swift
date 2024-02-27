@@ -10,7 +10,7 @@ struct BlurredBackground: View {
             .resizable()
             .padding(.vertical, -150)
             .padding(.horizontal, 0)
-            .blur(radius: 50, opaque: true)
+            .blur(radius: 100, opaque: true)
             .opacity(colorScheme == .dark ? 0.4 : 0.15) // change via mask when applied
             .brightness(0.01)
             .saturation(1.5)
@@ -18,5 +18,5 @@ struct BlurredBackground: View {
 }
 
 #Preview {
-    BlurredBackground(image: Image("1002"))
+    BlurredBackground(image: Image("1003"))
 }

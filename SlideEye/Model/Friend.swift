@@ -38,7 +38,8 @@ struct Friend: Hashable, Codable, Identifiable{
     
     var quotes: [Quote]
     
-    public struct Quote: Hashable, Codable {
+    public struct Quote: Hashable, Codable, Identifiable {
+        var id: Int
         var text: String
         var year: Int
     }

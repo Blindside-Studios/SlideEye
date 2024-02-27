@@ -12,7 +12,8 @@ struct NotesPage: View {
                 .opacity(0.4)
             ScrollView{
                 TextField("Take notes on \(friendName) here", text: $notes)
-                    .padding(.vertical, 70)
+                    .padding(.vertical, 45)
+                    .offset(y: 45)
             }
             .padding(.horizontal)
         }
