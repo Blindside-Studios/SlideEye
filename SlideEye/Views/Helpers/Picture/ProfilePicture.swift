@@ -17,5 +17,5 @@ struct ProfilePicture: View {
 }
 
 #Preview {
-    ProfilePicture(image: Image("1001"))
+    ProfilePicture(image: Image("1001_00"))
 }

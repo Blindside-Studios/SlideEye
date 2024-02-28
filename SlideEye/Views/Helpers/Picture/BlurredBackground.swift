@@ -18,5 +18,5 @@ struct BlurredBackground: View {
 }
 
 #Preview {
-    BlurredBackground(image: Image("1003"))
+    BlurredBackground(image: Image("1003_00"))
 }

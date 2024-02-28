@@ -52,6 +52,21 @@ struct FriendsList: View {
                     }
                 }
                 
+                Section("Debug")
+                {
+                    Button(action: {
+                        modelData.loadExampleFriends()
+                    }) {
+                        Text("Append Demo Items")
+                    }
+                    
+                    Button(action: {
+                        modelData.deleteAllFriends()
+                    }) {
+                        Text("Remove All Saved Friends")
+                    }
+                }
+                
                 Section
                 {
                     HStack
