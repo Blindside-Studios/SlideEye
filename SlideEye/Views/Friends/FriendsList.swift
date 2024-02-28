@@ -48,6 +48,7 @@ struct FriendsList: View {
                             }
                             Spacer()
                         }
+                        .shadow(radius: 10)
                     }
                 }
                 

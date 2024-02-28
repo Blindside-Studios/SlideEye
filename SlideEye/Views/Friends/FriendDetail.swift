@@ -10,7 +10,6 @@ struct FriendDetail: View {
     @State private var shouldPresentQuotesSheet = false
     @State private var friendNotes: String
     @State private var friendQuotes: [Friend.Quote]
-    @State private var firstFriendQuote: Friend.Quote
     
     var friendIndex: Int
     {
@@ -21,7 +20,6 @@ struct FriendDetail: View {
         self.friend = friend
         _friendNotes = State(initialValue: friend.notes)
         _friendQuotes = State(initialValue: friend.quotes)
-        _firstFriendQuote = State(initialValue: friend.quotes[0])
     }
     
     var body: some View {
@@ -94,10 +92,11 @@ struct FriendDetail: View {
                                 }
                                 Spacer()
                             }
+                            .shadow(radius: 5)
                         }
                     }
                 
-                QuotesWidget(name: friend.name, quote: $firstFriendQuote, profilePicture: friend.profilePicture)
+                QuotesWidget(name: friend.name, quote: friend.quotes[0], profilePicture: friend.profilePicture)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 5)
                     .shadow(radius: 10)
@@ -123,6 +122,7 @@ struct FriendDetail: View {
                                 }
                                 Spacer()
                             }
+                            .shadow(radius: 5)
                         }
                     }
                 
@@ -156,6 +156,7 @@ struct FriendDetail: View {
                                 }
                                 Spacer()
                             }
+                            .shadow(radius: 5)
                         }
                     }
             }

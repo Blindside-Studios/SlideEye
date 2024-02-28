@@ -7,19 +7,26 @@ struct QuotesPage: View {
     @Binding var quotes: [Friend.Quote]
     
     var body: some View {
-        List
+        ZStack
         {
-            ForEach(quotes)
-            { quote in
-                NavigationLink {
-                    //FriendDetail(friend: friend)
-                } label: {
-                    Text("(\(quote.year)) \(quote.text)")
+            BlurredBackground(image: profilePicture)
+                .opacity(0.4)
+            ScrollView
+            {
+                VStack(spacing: 10)
+                {
+                    ForEach(quotes)
+                    { quote in
+                        QuotesWidget(name: name, quote: quote, profilePicture: profilePicture)
+                            .padding(.horizontal)
+                            .frame(height: 200)
+                            .shadow(radius: 10)
+                    }
                 }
+                .padding(.vertical, 35)
+                .offset(y: 35)
             }
         }
-        .padding(.vertical, 45)
-        .offset(y: 45)
     }
 }
 

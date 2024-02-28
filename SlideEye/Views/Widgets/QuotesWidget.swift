@@ -2,7 +2,7 @@ import SwiftUI
 
 struct QuotesWidget: View {
     var name: String
-    @Binding var quote: Friend.Quote
+    var quote: Friend.Quote
     var profilePicture: Image
     
     @Environment(\.colorScheme) var colorScheme
@@ -38,22 +38,27 @@ struct QuotesWidget: View {
                     Text(quote.text)
                         .font(.title)
                         .fontWeight(.bold)
-                        .multilineTextAlignment(.center
-                        )
+                        .frame(alignment: .trailing)
+                        .multilineTextAlignment(.trailing)
                         .padding(.vertical, 10)
-                        .offset(y: 5)
-                        .shadow(radius: 1)
+                        .padding(.horizontal, 10)
+                        .offset(x: -10, y: 5)
+                        .shadow(radius: 2)
+                        .minimumScaleFactor(0.5)
                     
                     HStack
                     {
                         Spacer()
                         Text("\(name), \(String(format: "%d",quote.year))")
                             .font(.subheadline)
-                            .shadow(radius: 1)
+                            .shadow(radius: 3)
+                            .padding(.horizontal, 20)
+                            .offset(x: -10)
                     }
                 }
-                .frame(height: 170)
-                .padding(10)
+                .frame(height: 180)
+                .padding(.vertical, 10)
+                .offset(y: -5)
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 25))
@@ -61,5 +66,5 @@ struct QuotesWidget: View {
 }
 
 #Preview {
-    QuotesWidget(name: "Lara Croft", quote: .constant(Friend.Quote(id: 00000, text: "Fuck you, Rourke!", year: 2018)), profilePicture: Image("1001"))
+    QuotesWidget(name: "Lara Croft", quote: Friend.Quote(id: 00000, text: "fheuw ferw gre fgre fer wqef ewfewfewfewf ewf ew few fewfewfewf fewewfwef ewfewf ewf ewfewfewfew ewfewfewfew", year: 2018), profilePicture: Image("1001"))
 }
