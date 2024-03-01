@@ -16,17 +16,17 @@
         "notes": "Archeologist who likes to get herself in danger",
         "quotes": [
                 {
-                    "id": 1001000,
+                    "id": 10011000,
                     "text": "You don't know how far I've come.",
                     "year": 2016
                 },
                 {
-                    "id": 1001001,
+                    "id": 10011001,
                     "text": "I hate tombs...",
                     "year": 2013
                 },
                 {
-                    "id": 1001002,
+                    "id": 10011002,
                     "text": "I woke up this morning and I just hated everything.",
                     "year": 2001
                 }
@@ -50,12 +50,12 @@
         "notes": "Viva Libertad!",
         "quotes": [
                 {
-                    "id": 1002000,
+                    "id": 10021000,
                     "text": "When Tyranny Is Law. Revolution Is Order.",
                     "year": 2021
                 },
                 {
-                    "id": 1002001,
+                    "id": 10021001,
                     "text": "No.",
                     "year": 2021
                 }
@@ -79,12 +79,12 @@
         "notes": "Mamma Mia!!!",
         "quotes": [
                 {
-                    "id": 1003000,
+                    "id": 10031000,
                     "text": "If I'm Ever Trapped Or In Trouble... Promise You'll Come And Save Me.",
                     "year": 1997
                 },
                 {
-                    "id": 1003001,
+                    "id": 10031001,
                     "text": "I Feel Trapped.",
                     "year": 1997
                 }

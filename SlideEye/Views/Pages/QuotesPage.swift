@@ -4,7 +4,21 @@ struct QuotesPage: View {
     @Environment(ModelData.self) var modelData
     var name: String
     var profilePicture: Image
+    var friendID: Int
     @Binding var quotes: [Friend.Quote]
+    
+    @State private var shouldPresentAddNewSheet = false
+    @State private var addedQuoteText = ""
+    @State private var addedQuoteYear = Calendar.current.component(.year, from: Date())
+    
+    let currentYear = Calendar.current.component(.year, from: Date())
+    let maxYear = 99999
+    lazy var years = (0..<maxYear).filter { $0 <= currentYear }
+    
+    func addFriendToList(quoteText: String, year: Int)
+    {
+        quotes.insert(Friend.Quote(id: Int(String(friendID) + String(quotes.count + 1000)) ?? friendID*10000, text: quoteText, year: year), at: 0)
+    }
     
     var body: some View {
         ZStack
@@ -15,6 +29,7 @@ struct QuotesPage: View {
             {
                 VStack(spacing: 10)
                 {
+                    Button("Add quote") {shouldPresentAddNewSheet.toggle()}
                     ForEach(quotes)
                     { quote in
                         QuotesWidget(name: name, quote: quote, profilePicture: profilePicture)
@@ -25,6 +40,48 @@ struct QuotesPage: View {
                 }
                 .padding(.vertical, 35)
                 .offset(y: 35)
+            }
+        }
+        .sheet(isPresented: $shouldPresentAddNewSheet){
+        } content: {
+            ZStack{
+                ScrollView
+                {
+                    VStack
+                    {
+                        Text("Quote")
+                        TextField("Type your quote here", text: $addedQuoteText)
+                        Text("Year of origin")
+                        Picker("Year", selection: $addedQuoteYear) {
+                            ForEach(0..<99999) { year in
+                                if year <= Calendar.current.component(.year, from: Date()) {
+                                        Text("\(year)").tag(year)
+                                    }
+                                else {  }
+                            }
+                        }
+                        .pickerStyle(WheelPickerStyle())
+                        
+                    }
+                    .padding(.vertical, 35)
+                    .offset(y: 35)
+                }
+                //insert display content
+                VStack{
+                    ZStack{
+                        Rectangle()
+                            .foregroundStyle(.bar)
+                            .frame(height: 50)
+                        HStack{
+                            Button("Cancel") { shouldPresentAddNewSheet.toggle(); addedQuoteText=""; addedQuoteYear=currentYear }
+                            Spacer()
+                            Button("Save") { shouldPresentAddNewSheet.toggle(); addFriendToList(quoteText: addedQuoteText, year: addedQuoteYear); addedQuoteText=""; addedQuoteYear=currentYear }
+                        }
+                        .padding(.horizontal, 15)
+                    }
+                    Spacer()
+                }
+                .shadow(radius: 5)
             }
         }
     }
