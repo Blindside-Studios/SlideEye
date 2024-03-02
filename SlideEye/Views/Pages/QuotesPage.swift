@@ -9,15 +9,25 @@ struct QuotesPage: View {
     
     @State private var shouldPresentAddNewSheet = false
     @State private var addedQuoteText = ""
-    @State private var addedQuoteYear = Calendar.current.component(.year, from: Date())
+    @State private var addedQuoteYear = String(Calendar.current.component(.year, from: Date()))
     
-    let currentYear = Calendar.current.component(.year, from: Date())
-    let maxYear = 99999
-    lazy var years = (0..<maxYear).filter { $0 <= currentYear }
+    let currentYear = String(Calendar.current.component(.year, from: Date()))
     
     func addFriendToList(quoteText: String, year: Int)
     {
-        quotes.insert(Friend.Quote(id: Int(String(friendID) + String(quotes.count + 1000)) ?? friendID*10000, text: quoteText, year: year), at: 0)
+        let newQuote = Friend.Quote(id: Int(String(friendID) + String(quotes.count + 1000)) ?? friendID*10000, text: quoteText, year: year)
+        
+        quotes.append(newQuote)
+        
+        // get friend index based on ID
+        var friendIndex: Int
+        {
+            modelData.friends.firstIndex(where: { $0.id == friendID })!
+        }
+        
+        // add quote and save new selection
+        modelData.friends[friendIndex].quotes.append(newQuote)
+        modelData.saveChanges(friendsList: modelData.friends)
     }
     
     var body: some View {
@@ -52,15 +62,8 @@ struct QuotesPage: View {
                         Text("Quote")
                         TextField("Type your quote here", text: $addedQuoteText)
                         Text("Year of origin")
-                        Picker("Year", selection: $addedQuoteYear) {
-                            ForEach(0..<99999) { year in
-                                if year <= Calendar.current.component(.year, from: Date()) {
-                                        Text("\(year)").tag(year)
-                                    }
-                                else {  }
-                            }
-                        }
-                        .pickerStyle(WheelPickerStyle())
+                        TextField("In which year was this quote said?", text: $addedQuoteYear)
+                            .keyboardType(.numberPad)
                         
                     }
                     .padding(.vertical, 35)
@@ -73,9 +76,9 @@ struct QuotesPage: View {
                             .foregroundStyle(.bar)
                             .frame(height: 50)
                         HStack{
-                            Button("Cancel") { shouldPresentAddNewSheet.toggle(); addedQuoteText=""; addedQuoteYear=currentYear }
+                            Button("Cancel") { shouldPresentAddNewSheet.toggle(); addedQuoteText=""; addedQuoteYear = currentYear }
                             Spacer()
-                            Button("Save") { shouldPresentAddNewSheet.toggle(); addFriendToList(quoteText: addedQuoteText, year: addedQuoteYear); addedQuoteText=""; addedQuoteYear=currentYear }
+                            Button("Save") { shouldPresentAddNewSheet.toggle(); addFriendToList(quoteText: addedQuoteText, year: Int(addedQuoteYear) ?? Calendar.current.component(.year, from: Date())); addedQuoteText=""; addedQuoteYear=currentYear }
                         }
                         .padding(.horizontal, 15)
                     }
