@@ -6,12 +6,17 @@ struct QuotesPage: View {
     var profilePicture: Image
     var friendID: Int
     @Binding var quotes: [Friend.Quote]
+    @Binding var shouldPresentAddNewSheet: Bool
+    @Binding var sortByYear: Bool
     
-    @State private var shouldPresentAddNewSheet = false
     @State private var addedQuoteText = ""
     @State private var addedQuoteYear = String(Calendar.current.component(.year, from: Date()))
     
     let currentYear = String(Calendar.current.component(.year, from: Date()))
+    
+    var sortedQuotes: [Friend.Quote] {
+        sortByYear ? quotes.reversed().sorted { $0.year > $1.year } : quotes.reversed()
+    }
     
     func addFriendToList(quoteText: String, year: Int)
     {
@@ -39,8 +44,7 @@ struct QuotesPage: View {
             {
                 VStack(spacing: 10)
                 {
-                    Button("Add quote") {shouldPresentAddNewSheet.toggle()}
-                    ForEach(quotes)
+                    ForEach(sortedQuotes)
                     { quote in
                         QuotesWidget(name: name, quote: quote, profilePicture: profilePicture)
                             .padding(.horizontal)

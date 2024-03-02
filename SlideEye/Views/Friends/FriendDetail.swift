@@ -11,6 +11,10 @@ struct FriendDetail: View {
     @State private var friendNotes: String
     @State private var friendQuotes: [Friend.Quote]
     
+    // for QuotesPage
+    @State private var shouldPresentAddNewQuoteSheet: Bool
+    @State private var sortQuotesByYear: Bool
+    
     var friendIndex: Int
     {
         modelData.friends.firstIndex(where: { $0.id == friend.id })!
@@ -20,6 +24,10 @@ struct FriendDetail: View {
         self.friend = friend
         _friendNotes = State(initialValue: friend.notes)
         _friendQuotes = State(initialValue: friend.quotes)
+        
+        _shouldPresentAddNewQuoteSheet = State(initialValue: false)
+        //TODO: load sortQuotesByYear from user preferences
+        _sortQuotesByYear = State(initialValue: false)
     }
     
     var body: some View {
@@ -106,7 +114,7 @@ struct FriendDetail: View {
                     .sheet(isPresented: $shouldPresentQuotesSheet){
                     } content: {
                         ZStack{
-                            QuotesPage(name: friend.name, profilePicture: friend.profilePicture, friendID: friend.id, quotes: $friendQuotes)
+                            QuotesPage(name: friend.name, profilePicture: friend.profilePicture, friendID: friend.id, quotes: $friendQuotes, shouldPresentAddNewSheet: $shouldPresentAddNewQuoteSheet, sortByYear: $sortQuotesByYear)
                                 .padding(-1)
                             VStack{
                                 ZStack{
@@ -116,6 +124,14 @@ struct FriendDetail: View {
                                     HStack{
                                         Text(friend.name+"'s quotes")
                                         Spacer()
+                                        QuoteSortButton(sortByYear: $sortQuotesByYear)
+                                        Button(action: {
+                                            shouldPresentAddNewQuoteSheet.toggle()
+                                        }, label: {
+                                            Image(systemName: "plus")
+                                                .padding(.horizontal, 5)
+                                                .padding(.vertical, 10)
+                                        })
                                         Button("Done") { shouldPresentQuotesSheet.toggle() }
                                     }
                                     .padding(.horizontal, 15)
