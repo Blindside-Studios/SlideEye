@@ -7,7 +7,7 @@ struct FriendsList: View {
     @State private var shouldPresentAddPeopleSheet = false
     
     var filteredFriends: [Friend] {
-        modelData.friends.filter { friend in
+        modelData.friends.reversed().filter { friend in
             (!sortByFavorites || friend.isFavorite)
         }
     }
@@ -17,7 +17,13 @@ struct FriendsList: View {
     public init(){
         _sortByFavorites = State(initialValue: false)
         _shouldPresentAddPeopleSheet = State(initialValue: false)
+        // TODO: Set friend to an empty Friend object, because this code will not work if you don't already have friends!
         _friendToAdd = State(initialValue: ModelData().friends[0])
+    }
+    
+    func resetFriendToAdd(){
+        // TODO: Actually reset friend
+        friendToAdd = ModelData().friends[0]
     }
     
     var body: some View {
@@ -48,12 +54,14 @@ struct FriendsList: View {
                                         .foregroundStyle(.bar)
                                         .frame(height: 50)
                                     HStack{
-                                        Button("Cancel") { shouldPresentAddPeopleSheet.toggle() }
+                                        Button("Cancel") { shouldPresentAddPeopleSheet.toggle(); resetFriendToAdd() }
                                         Spacer()
                                         Button("Save")
                                         {
-                                            // add logic to add people here
+                                            modelData.friends.append(friendToAdd)
+                                            modelData.saveChanges(friendsList: modelData.friends)
                                             shouldPresentAddPeopleSheet.toggle()
+                                            resetFriendToAdd()
                                         }
                                     }
                                     .padding(15)
