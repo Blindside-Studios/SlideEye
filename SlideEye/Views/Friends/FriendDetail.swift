@@ -104,7 +104,7 @@ struct FriendDetail: View {
                         }
                     }
                 
-                QuotesWidget(name: friend.name, quote: friend.quotes[0], profilePicture: friend.profilePicture)
+                QuotesWidget(name: friend.name, quote: friend.quotes[0], profilePicture: friend.profilePicture, useTransparency: true)
                     .padding(.horizontal, 15)
                     .padding(.vertical, 5)
                     .shadow(radius: 10)

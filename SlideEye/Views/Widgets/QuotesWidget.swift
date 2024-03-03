@@ -4,16 +4,27 @@ struct QuotesWidget: View {
     var name: String
     var quote: Friend.Quote
     var profilePicture: Image
+    var useTransparency: Bool
     
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         ZStack
         {
-            Rectangle()
-                .frame(height: 200)
-                .background(.regularMaterial)
-                .brightness(colorScheme == .dark ? -0.3: 0.4)
+            if (useTransparency)
+            {
+                Rectangle()
+                    .frame(height: 200)
+                    .background(.regularMaterial)
+                    .brightness(colorScheme == .dark ? -0.3: 0.4)
+            }
+            
+            else
+            {
+                BlurredBackground(image: profilePicture)
+                    .frame(height: 200)
+            }
+            
             HStack
             {
                 profilePicture
@@ -66,5 +77,5 @@ struct QuotesWidget: View {
 }
 
 #Preview {
-    QuotesWidget(name: "Lara Croft", quote: Friend.Quote(id: 00000, text: "fheuw ferw gre fgre fer wqef ewfewfewfewf ewf ew few fewfewfewf fewewfwef ewfewf ewf ewfewfewfew ewfewfewfew", year: 2018), profilePicture: Image("1001_00"))
+    QuotesWidget(name: "Lara Croft", quote: Friend.Quote(id: 00000, text: "fheuw ferw gre fgre fer wqef ewfewfewfewf ewf ew few fewfewfewf fewewfwef ewfewf ewf ewfewfewfew ewfewfewfew", year: 2018), profilePicture: Image("1001_00"), useTransparency: false)
 }

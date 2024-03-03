@@ -35,6 +35,32 @@ struct QuotesPage: View {
         modelData.saveChanges(friendsList: modelData.friends)
     }
     
+    @State private var isShareSheetShowing = false
+    @State private var shareItems: [Any] = []
+    
+    @MainActor func exportQuote(quote: Friend.Quote) {
+        let view = QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: false).frame(width: 500, height: 200)
+        
+        let renderer = ImageRenderer(content: view)
+        
+        if let uiImage = renderer.uiImage {
+            
+            if let data = uiImage.pngData() {
+                shareItems = [data]
+                isShareSheetShowing = true
+            }
+        }
+    }
+    
+    func getTopViewController() -> UIViewController? {
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let topController = windowScene.windows.first?.rootViewController {
+            return topController
+        }
+        return nil
+    }
+
+    
     var body: some View {
         ZStack
         {
@@ -46,54 +72,86 @@ struct QuotesPage: View {
                 {
                     ForEach(sortedQuotes)
                     { quote in
-                        QuotesWidget(name: name, quote: quote, profilePicture: profilePicture)
+                        QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: true)
                             .padding(.horizontal)
                             .frame(height: 200)
                             .shadow(radius: 10)
+                            .contextMenu {
+                                Button {
+                                    exportQuote(quote: quote)
+                                } label: {
+                                    Label("Share", systemImage: "square.and.arrow.up")
+                                }
+                                Divider()
+                                Button(role: .destructive, action: {
+                                    // TODO: Add deleting
+                                }) {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                     }
+                    .listStyle(.plain)
+                    .animation(.bouncy(duration: 0.5), value: sortedQuotes)
                 }
-                .animation(.bouncy(duration: 0.5), value: sortedQuotes)
                 .padding(.vertical, 35)
                 .offset(y: 35)
+                .sheet(isPresented: $isShareSheetShowing) {
+                    ShareSheet(activityItems: shareItems)
+                }
             }
-        }
-        .sheet(isPresented: $shouldPresentAddNewSheet){
-        } content: {
-            ZStack{
-                List
-                {
-                    Section("Quote"){
-                        TextField("Type your quote here", text: $addedQuoteText)
-                    }
-                    Section("Year"){
-                    TextField("In which year was this quote said?", text: $addedQuoteYear)
-                            .keyboardType(.numberPad)
-                    }
-                    
-                }
-                .padding(.vertical, 35)
-                .offset(y: 35)
-                
-                //insert display content
-                VStack{
-                    ZStack{
-                        Rectangle()
-                            .foregroundStyle(.bar)
-                            .frame(height: 50)
-                        HStack{
-                            Button("Cancel") { shouldPresentAddNewSheet.toggle(); addedQuoteText=""; addedQuoteYear = currentYear }
-                            Spacer()
-                            Button("Save") { shouldPresentAddNewSheet.toggle(); addFriendToList(quoteText: addedQuoteText, year: Int(addedQuoteYear) ?? Calendar.current.component(.year, from: Date())); addedQuoteText=""; addedQuoteYear=currentYear }
+            .sheet(isPresented: $shouldPresentAddNewSheet){
+            } content: {
+                ZStack{
+                    List
+                    {
+                        Section("Quote"){
+                            TextField("Type your quote here", text: $addedQuoteText)
                         }
-                        .padding(.horizontal, 15)
+                        Section("Year"){
+                            TextField("In which year was this quote said?", text: $addedQuoteYear)
+                                .keyboardType(.numberPad)
+                        }
+                        
                     }
-                    Spacer()
+                    .padding(.vertical, 35)
+                    .offset(y: 35)
+                    
+                    //insert display content
+                    VStack{
+                        ZStack{
+                            Rectangle()
+                                .foregroundStyle(.bar)
+                                .frame(height: 50)
+                            HStack{
+                                Button("Cancel") { shouldPresentAddNewSheet.toggle(); addedQuoteText=""; addedQuoteYear = currentYear }
+                                Spacer()
+                                Button("Save") { shouldPresentAddNewSheet.toggle(); addFriendToList(quoteText: addedQuoteText, year: Int(addedQuoteYear) ?? Calendar.current.component(.year, from: Date())); addedQuoteText=""; addedQuoteYear=currentYear }
+                            }
+                            .padding(.horizontal, 15)
+                        }
+                        Spacer()
+                    }
+                    .shadow(radius: 5)
                 }
-                .shadow(radius: 5)
             }
         }
     }
 }
+
+struct ShareSheet: UIViewControllerRepresentable {
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
+        return controller
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
+        // Update the controller if needed.
+    }
+}
+
 
 #Preview {
  let modelData = ModelData()

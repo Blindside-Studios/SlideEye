@@ -4,6 +4,11 @@ struct NewFriendPage: View {
     @Environment(ModelData.self) var modelData
     @Binding var friendDetails: Friend
     
+    func findCityDetails()
+    {
+        // TODO: implement automated timezone finding
+    }
+    
     var body: some View {
         List
         {
@@ -25,6 +30,13 @@ struct NewFriendPage: View {
                 TextField("Location", text: $friendDetails.location)
             }
             
+            Section(header: Text("City"), footer: Text("Enter the closest larger city your friend lives in, it will be used to find some of the information below")){
+                TextField("City", text: $friendDetails.city)
+                    .onSubmit {
+                        findCityDetails()
+                    }
+            }
+            
             Section("Country"){
                 TextField("Country", text: $friendDetails.country)
             }
@@ -33,7 +45,7 @@ struct NewFriendPage: View {
                 TextField("Continent", text: $friendDetails.continent)
             }
             
-            Section("Time Zone ID"){
+            Section(header: Text("Time Zone ID"), footer: Text("This should conform to the following format: Continent/City, e.g. 'America/New_York'")){
                 TextField("Time Zone ID", text: $friendDetails.timeZoneID)
             }
             
@@ -51,7 +63,5 @@ struct NewFriendPage: View {
 }
 
 /*#Preview {
-    let modelData = ModelData()
     NewFriendPage(friendDetails: .constant(ModelData().friends[0]))
-        .environment(modelData)
 }*/

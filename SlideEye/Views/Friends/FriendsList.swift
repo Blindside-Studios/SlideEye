@@ -115,7 +115,7 @@ struct FriendsList: View {
             Text("Pick a friend")
         }
         
-        // this does not work, fix it, miraculix
+        // TODO: this does not work, fix it, miraculix
         .toolbar(content: {
             EditButton()
             FavoriteButton(isSet: $sortByFavorites)
