@@ -190,6 +190,6 @@ struct FriendDetail: View {
 
 #Preview {
     let modelData = ModelData()
-    return FriendDetail(friend: ModelData().friends[1])
+    return FriendDetail(friend: ModelData().friends[0])
         .environment(modelData)
 }

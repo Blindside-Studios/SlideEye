@@ -42,7 +42,7 @@ struct QuotesPage: View {
                 .opacity(0.4)
             ScrollView
             {
-                VStack(spacing: 10)
+                LazyVStack(spacing: 10)
                 {
                     ForEach(sortedQuotes)
                     { quote in
@@ -52,6 +52,7 @@ struct QuotesPage: View {
                             .shadow(radius: 10)
                     }
                 }
+                .animation(.bouncy(duration: 0.5), value: sortedQuotes)
                 .padding(.vertical, 35)
                 .offset(y: 35)
             }
@@ -96,6 +97,6 @@ struct QuotesPage: View {
 
 #Preview {
  let modelData = ModelData()
-    return QuotesPage(name: "Lara Croft", profilePicture: Image("1001_00"), friendID: modelData.friends[0].id, quotes: .constant(modelData.friends[0].quotes), shouldPresentAddNewSheet: .constant(true), sortByYear: .constant(false))
+    return QuotesPage(name: "Lara Croft", profilePicture: Image("1001_00"), friendID: modelData.friends[0].id, quotes: .constant(modelData.friends[0].quotes), shouldPresentAddNewSheet: .constant(false), sortByYear: .constant(false))
      .environment(modelData)
 }

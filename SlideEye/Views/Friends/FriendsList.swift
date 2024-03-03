@@ -107,10 +107,10 @@ struct FriendsList: View {
                             FriendRow(friend: friend)
                         }
                     }
-                    .animation(.default, value: filteredFriends)
-                    .navigationTitle("My friends")
                 }
             }
+            .animation(.default, value: filteredFriends)
+            .navigationTitle("My friends")
         } detail: {
             Text("Pick a friend")
         }
