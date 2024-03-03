@@ -36,39 +36,13 @@ struct QuotesPage: View {
         modelData.saveChanges(friendsList: modelData.friends)
     }
     
-    @State private var isShareSheetShowing = false
-    @State private var shareItems: [Any] = []
+    @State private var isShowingShareSheet = false
+    @State private var selectedQuote = Friend.Quote(id: 0000, text: "Quote", year: 0)
     
-    @MainActor func exportQuote(quote: Friend.Quote)
-        {
-            isShown.toggle()
-            
-            let renderer = ImageRenderer(content: QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: false).frame(width: 500, height: 200))
-            
-            if let uiImage = renderer.uiImage {
-                
-                if let data = uiImage.pngData() {
-                    
-                    let activityViewController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
-                            
-                    if let viewController = UIApplication.shared.connectedScenes
-                        .compactMap({ $0 as? UIWindowScene })
-                        .first?.windows
-                        .first?.rootViewController {
-                        viewController.present(activityViewController, animated: true, completion: nil)
-                    }
-                }
-            }
-        }
-    
-    func getTopViewController() -> UIViewController? {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let topController = windowScene.windows.first?.rootViewController {
-            return topController
-        }
-        return nil
+    func renderQuote(quote: Friend.Quote){
+        selectedQuote = quote
+        isShowingShareSheet.toggle()
     }
-
     
     var body: some View {
         ZStack
@@ -87,7 +61,7 @@ struct QuotesPage: View {
                             .shadow(radius: 10)
                             .contextMenu {
                                 Button {
-                                    exportQuote(quote: quote)
+                                    renderQuote(quote: quote)
                                 } label: {
                                     Label("Share", systemImage: "square.and.arrow.up")
                                 }
@@ -99,9 +73,9 @@ struct QuotesPage: View {
                                 }
                             }
                     }
-                    .listStyle(.plain)
-                    .animation(.bouncy(duration: 0.5), value: sortedQuotes)
                 }
+
+                .animation(.bouncy(duration: 0.5), value: sortedQuotes)
                 .padding(.vertical, 35)
                 .offset(y: 35)
             }
@@ -139,6 +113,10 @@ struct QuotesPage: View {
                     }
                     .shadow(radius: 5)
                 }
+            }
+            .sheet(isPresented: $isShowingShareSheet){
+            } content: {
+                QuotesSharePage(name: name, quote: $selectedQuote, profilePicture: profilePicture)
             }
         }
     }

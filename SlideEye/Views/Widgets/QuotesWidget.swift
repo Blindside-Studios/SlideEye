@@ -76,6 +76,24 @@ struct QuotesWidget: View {
     }
 }
 
+extension View {
+    func snapshot() -> UIImage {
+        let controller = UIHostingController(rootView: self)
+        let view = controller.view
+
+        let targetSize = controller.view.intrinsicContentSize
+        view!.bounds = CGRect(origin: .zero, size: targetSize)
+        view!.backgroundColor = .clear
+
+        let renderer = UIGraphicsImageRenderer(size: targetSize)
+
+        return renderer.image { _ in
+            view!.drawHierarchy(in: controller.view.bounds, afterScreenUpdates: true)
+        }
+    }
+}
+
+
 #Preview {
     QuotesWidget(name: "Lara Croft", quote: Friend.Quote(id: 00000, text: "fheuw ferw gre fgre fer wqef ewfewfewfewf ewf ew few fewfewfewf fewewfwef ewfewf ewf ewfewfewfew ewfewfewfew", year: 2018), profilePicture: Image("1001_00"), useTransparency: false)
 }
