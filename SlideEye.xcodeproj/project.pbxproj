@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A2A36F72B93D5970087A06E /* QuoteSortButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2A36F62B93D5970087A06E /* QuoteSortButton.swift */; };
+		0A2A36F92B94AFAF0087A06E /* NewFriendPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2A36F82B94AFAF0087A06E /* NewFriendPage.swift */; };
 		0A3910552B829F6100A7D5E3 /* BlurredBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3910542B829F6100A7D5E3 /* BlurredBackground.swift */; };
 		0A40163E2B75B44D00B610F3 /* SlideEyeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A40163D2B75B44D00B610F3 /* SlideEyeApp.swift */; };
 		0A4016402B75B44D00B610F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A40163F2B75B44D00B610F3 /* ContentView.swift */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		0A2A36F62B93D5970087A06E /* QuoteSortButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuoteSortButton.swift; sourceTree = "<group>"; };
+		0A2A36F82B94AFAF0087A06E /* NewFriendPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFriendPage.swift; sourceTree = "<group>"; };
 		0A3910542B829F6100A7D5E3 /* BlurredBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurredBackground.swift; sourceTree = "<group>"; };
 		0A40163A2B75B44D00B610F3 /* SlideEye.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SlideEye.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A40163D2B75B44D00B610F3 /* SlideEyeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideEyeApp.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				0A4A90A62B848FAA0002BBC9 /* NotesPage.swift */,
 				0AFD184A2B8BEE5C00A051DF /* QuotesPage.swift */,
+				0A2A36F82B94AFAF0087A06E /* NewFriendPage.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				0AB2F2B72B7D8936006DEF00 /* FriendsList.swift in Sources */,
 				0A40163E2B75B44D00B610F3 /* SlideEyeApp.swift in Sources */,
 				0AFD18492B8BED4500A051DF /* QuotesWidget.swift in Sources */,
+				0A2A36F92B94AFAF0087A06E /* NewFriendPage.swift in Sources */,
 				0A4A90B22B8A49520002BBC9 /* AnalogueClock.swift in Sources */,
 				0AFD184B2B8BEE5C00A051DF /* QuotesPage.swift in Sources */,
 				0A4016502B75BA6A00B610F3 /* FalloffImage.swift in Sources */,

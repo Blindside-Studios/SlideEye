@@ -2,6 +2,7 @@ import SwiftUI
 
 struct FriendsList: View {
     @Environment(ModelData.self) var modelData
+    
     @State private var sortByFavorites = false
     @State private var shouldPresentAddPeopleSheet = false
     
@@ -9,6 +10,14 @@ struct FriendsList: View {
         modelData.friends.filter { friend in
             (!sortByFavorites || friend.isFavorite)
         }
+    }
+    
+    @State private var friendToAdd: Friend
+    
+    public init(){
+        _sortByFavorites = State(initialValue: false)
+        _shouldPresentAddPeopleSheet = State(initialValue: false)
+        _friendToAdd = State(initialValue: ModelData().friends[0])
     }
     
     var body: some View {
@@ -30,25 +39,29 @@ struct FriendsList: View {
                     })
                     .sheet(isPresented: $shouldPresentAddPeopleSheet){
                     } content: {
-                        VStack{
-                            ZStack{
-                                Rectangle()
-                                    .foregroundStyle(.bar)
-                                    .frame(height: 50)
-                                HStack{
-                                    Button("Cancel") { shouldPresentAddPeopleSheet.toggle() }
-                                    Spacer()
-                                    Button("Done")
-                                    {
-                                        // add logic to add people here
-                                        shouldPresentAddPeopleSheet.toggle()
+                        ZStack
+                        {
+                            NewFriendPage(friendDetails: $friendToAdd)
+                            VStack{
+                                ZStack{
+                                    Rectangle()
+                                        .foregroundStyle(.bar)
+                                        .frame(height: 50)
+                                    HStack{
+                                        Button("Cancel") { shouldPresentAddPeopleSheet.toggle() }
+                                        Spacer()
+                                        Button("Save")
+                                        {
+                                            // add logic to add people here
+                                            shouldPresentAddPeopleSheet.toggle()
+                                        }
                                     }
+                                    .padding(15)
                                 }
-                                .padding(15)
+                                Spacer()
                             }
-                            Spacer()
+                            .shadow(radius: 10)
                         }
-                        .shadow(radius: 10)
                     }
                 }
                 

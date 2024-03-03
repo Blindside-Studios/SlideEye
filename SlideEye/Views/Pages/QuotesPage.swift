@@ -59,20 +59,20 @@ struct QuotesPage: View {
         .sheet(isPresented: $shouldPresentAddNewSheet){
         } content: {
             ZStack{
-                ScrollView
+                List
                 {
-                    VStack
-                    {
-                        Text("Quote")
+                    Section("Quote"){
                         TextField("Type your quote here", text: $addedQuoteText)
-                        Text("Year of origin")
-                        TextField("In which year was this quote said?", text: $addedQuoteYear)
-                            .keyboardType(.numberPad)
-                        
                     }
-                    .padding(.vertical, 35)
-                    .offset(y: 35)
+                    Section("Year"){
+                    TextField("In which year was this quote said?", text: $addedQuoteYear)
+                            .keyboardType(.numberPad)
+                    }
+                    
                 }
+                .padding(.vertical, 35)
+                .offset(y: 35)
+                
                 //insert display content
                 VStack{
                     ZStack{
@@ -94,10 +94,8 @@ struct QuotesPage: View {
     }
 }
 
-/*#Preview {
-    QuotesPage(
-        name: "name",
-        profilePicture: Image("1001"),
-        quotes: .constant(modelData.friends[0].quotes)
-    )
-}*/
+#Preview {
+ let modelData = ModelData()
+    return QuotesPage(name: "Lara Croft", profilePicture: Image("1001_00"), friendID: modelData.friends[0].id, quotes: .constant(modelData.friends[0].quotes), shouldPresentAddNewSheet: .constant(true), sortByYear: .constant(false))
+     .environment(modelData)
+}
