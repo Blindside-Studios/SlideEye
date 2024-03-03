@@ -114,7 +114,7 @@ struct FriendDetail: View {
                     .sheet(isPresented: $shouldPresentQuotesSheet){
                     } content: {
                         ZStack{
-                            QuotesPage(name: friend.name, profilePicture: friend.profilePicture, friendID: friend.id, quotes: $friendQuotes, shouldPresentAddNewSheet: $shouldPresentAddNewQuoteSheet, sortByYear: $sortQuotesByYear)
+                            QuotesPage(name: friend.name, profilePicture: friend.profilePicture, friendID: friend.id, quotes: $friendQuotes, shouldPresentAddNewSheet: $shouldPresentAddNewQuoteSheet, sortByYear: $sortQuotesByYear, isShown: $shouldPresentQuotesSheet)
                                 .padding(-1)
                             VStack{
                                 ZStack{

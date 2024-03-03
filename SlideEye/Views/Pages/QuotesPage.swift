@@ -8,6 +8,7 @@ struct QuotesPage: View {
     @Binding var quotes: [Friend.Quote]
     @Binding var shouldPresentAddNewSheet: Bool
     @Binding var sortByYear: Bool
+    @Binding var isShown: Bool
     
     @State private var addedQuoteText = ""
     @State private var addedQuoteYear = String(Calendar.current.component(.year, from: Date()))
@@ -38,19 +39,27 @@ struct QuotesPage: View {
     @State private var isShareSheetShowing = false
     @State private var shareItems: [Any] = []
     
-    @MainActor func exportQuote(quote: Friend.Quote) {
-        let view = QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: false).frame(width: 500, height: 200)
-        
-        let renderer = ImageRenderer(content: view)
-        
-        if let uiImage = renderer.uiImage {
+    @MainActor func exportQuote(quote: Friend.Quote)
+        {
+            isShown.toggle()
             
-            if let data = uiImage.pngData() {
-                shareItems = [data]
-                isShareSheetShowing = true
+            let renderer = ImageRenderer(content: QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: false).frame(width: 500, height: 200))
+            
+            if let uiImage = renderer.uiImage {
+                
+                if let data = uiImage.pngData() {
+                    
+                    let activityViewController = UIActivityViewController(activityItems: [data], applicationActivities: nil)
+                            
+                    if let viewController = UIApplication.shared.connectedScenes
+                        .compactMap({ $0 as? UIWindowScene })
+                        .first?.windows
+                        .first?.rootViewController {
+                        viewController.present(activityViewController, animated: true, completion: nil)
+                    }
+                }
             }
         }
-    }
     
     func getTopViewController() -> UIViewController? {
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
@@ -95,9 +104,6 @@ struct QuotesPage: View {
                 }
                 .padding(.vertical, 35)
                 .offset(y: 35)
-                .sheet(isPresented: $isShareSheetShowing) {
-                    ShareSheet(activityItems: shareItems)
-                }
             }
             .sheet(isPresented: $shouldPresentAddNewSheet){
             } content: {
@@ -138,23 +144,8 @@ struct QuotesPage: View {
     }
 }
 
-struct ShareSheet: UIViewControllerRepresentable {
-    var activityItems: [Any]
-    var applicationActivities: [UIActivity]? = nil
-
-    func makeUIViewController(context: Context) -> UIActivityViewController {
-        let controller = UIActivityViewController(activityItems: activityItems, applicationActivities: applicationActivities)
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {
-        // Update the controller if needed.
-    }
-}
-
-
 #Preview {
  let modelData = ModelData()
-    return QuotesPage(name: "Lara Croft", profilePicture: Image("1001_00"), friendID: modelData.friends[0].id, quotes: .constant(modelData.friends[0].quotes), shouldPresentAddNewSheet: .constant(false), sortByYear: .constant(false))
+    return QuotesPage(name: "Lara Croft", profilePicture: Image("1001_00"), friendID: modelData.friends[0].id, quotes: .constant(modelData.friends[0].quotes), shouldPresentAddNewSheet: .constant(false), sortByYear: .constant(false), isShown: .constant(true))
      .environment(modelData)
 }
