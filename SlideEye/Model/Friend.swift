@@ -44,3 +44,21 @@ struct Friend: Hashable, Codable, Identifiable{
         var year: Int
     }
 }
+
+extension Friend {
+    init(id: Int, quotes: [Quote]) {
+        self.id = id
+        self.name = ""
+        self.occupation = ""
+        self.location = ""
+        self.city = ""
+        self.country = ""
+        self.continent = ""
+        self.timeZoneID = ""
+        self.isFavorite = false
+        self.notes = ""
+        self.imageName = ""
+        self.coordinates = Coordinates(latitude: 0, longitude: 0)
+        self.quotes = quotes
+    }
+}

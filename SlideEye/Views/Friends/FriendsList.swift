@@ -1,4 +1,5 @@
 import SwiftUI
+import CoreLocation
 
 struct FriendsList: View {
     @Environment(ModelData.self) var modelData
@@ -14,16 +15,18 @@ struct FriendsList: View {
     
     @State private var friendToAdd: Friend
     
+    let nullFriend = Friend(id: 0000, quotes: [Friend.Quote(id: 000, text: "Example Quote", year: 2024)])
+    
     public init(){
         _sortByFavorites = State(initialValue: false)
         _shouldPresentAddPeopleSheet = State(initialValue: false)
         // TODO: Set friend to an empty Friend object, because this code will not work if you don't already have friends!
-        _friendToAdd = State(initialValue: ModelData().friends[0])
+        
+        _friendToAdd = State(initialValue: nullFriend)
     }
     
     func resetFriendToAdd(){
-        // TODO: Actually reset friend
-        friendToAdd = ModelData().friends[0]
+        friendToAdd = nullFriend
     }
     
     var body: some View {
