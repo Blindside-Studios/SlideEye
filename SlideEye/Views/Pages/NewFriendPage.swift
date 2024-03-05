@@ -20,6 +20,17 @@ struct NewFriendPage: View {
                 friendDetails.profilePicture
                     .resizable()
                     .scaledToFit()
+                    .overlay(alignment: .bottomTrailing) {
+                            /*PhotosPicker(selection: $friendDetails.profilePicture,
+                                         matching: .images,
+                                         photoLibrary: .shared()) {
+                                Image(systemName: "pencil.circle.fill")
+                                    .symbolRenderingMode(.multicolor)
+                                    .font(.system(size: 30))
+                                    .foregroundColor(.accentColor)
+                            }
+                            .buttonStyle(.borderless)*/
+                        }
             }
             
             Section("Occupation"){

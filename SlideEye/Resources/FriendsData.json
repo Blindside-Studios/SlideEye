@@ -16,20 +16,25 @@
         "notes": "Archeologist who likes to get herself in danger",
         "quotes": [
                 {
-                    "id": 10011000,
+                    "id": 1000,
                     "text": "You don't know how far I've come.",
                     "year": 2016
                 },
                 {
-                    "id": 10011001,
+                    "id": 1001,
+                    "text": "I woke up this morning and I just hated everything.",
+                    "year": 2001
+                },
+                {
+                    "id": 1002,
                     "text": "I hate tombs...",
                     "year": 2013
                 },
                 {
-                    "id": 10011002,
-                    "text": "I woke up this morning and I just hated everything.",
-                    "year": 2001
-                }
+                    "id": 1003,
+                    "text": "Fuck you, Rourke",
+                    "year": 2018
+                },
             ],
         "imageName": "1001_00"
     },
@@ -50,12 +55,12 @@
         "notes": "Viva Libertad!",
         "quotes": [
                 {
-                    "id": 10021000,
+                    "id": 1000,
                     "text": "When Tyranny Is Law. Revolution Is Order.",
                     "year": 2021
                 },
                 {
-                    "id": 10021001,
+                    "id": 1001,
                     "text": "No.",
                     "year": 2021
                 }
@@ -79,12 +84,12 @@
         "notes": "Mamma Mia!!!",
         "quotes": [
                 {
-                    "id": 10031000,
+                    "id": 1000,
                     "text": "If I'm Ever Trapped Or In Trouble... Promise You'll Come And Save Me.",
                     "year": 1997
                 },
                 {
-                    "id": 10031001,
+                    "id": 1001,
                     "text": "I Feel Trapped.",
                     "year": 1997
                 }

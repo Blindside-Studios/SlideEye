@@ -8,6 +8,8 @@ struct QuotesWidget: View {
     
     @Environment(\.colorScheme) var colorScheme
     
+    @State var textBoxHeight: CGFloat = 0
+    
     var body: some View {
         ZStack
         {
@@ -40,36 +42,62 @@ struct QuotesWidget: View {
                     .saturation(colorScheme == .dark ? 1: 0.1)
                 Spacer()
             }
+            
             HStack
             {
                 Spacer()
                     .frame(width: 120)
-                VStack
+                ZStack(alignment: .leading)
                 {
-                    Text(quote.text)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .frame(alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 10)
-                        .offset(x: -10, y: 5)
-                        .shadow(radius: 2)
-                        .minimumScaleFactor(0.5)
-                    
                     HStack
                     {
+                        Image(systemName: "quote.opening")
+                            .resizable()
+                            .frame(width: 75, height: 50)
+                            .opacity(0.25)
+                            .offset(y: -(textBoxHeight-20)/2)
                         Spacer()
-                        Text("\(name), \(String(format: "%d",quote.year))")
-                            .font(.subheadline)
-                            .shadow(radius: 3)
-                            .padding(.horizontal, 20)
-                            .offset(x: -10)
+                        Image(systemName: "quote.closing")
+                            .resizable()
+                            .frame(width: 75, height: 50)
+                            .opacity(0.25)
+                            .offset(y: (textBoxHeight-50)/2)
                     }
+                    .padding(10)
+                    .offset(x: -10)
+                    
+                    VStack
+                    {
+                        Text(quote.text)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .frame(alignment: .trailing)
+                            .multilineTextAlignment(.trailing)
+                            .padding(.vertical, 10)
+                            .padding(.horizontal, 10)
+                            .offset(x: -10, y: 5)
+                            .shadow(radius: 2)
+                            .minimumScaleFactor(0.5)
+                            .background(GeometryReader { geometry in
+                                                    Color.clear.onAppear {
+                                                        self.textBoxHeight = geometry.size.height
+                                                    }
+                                                })
+                        
+                        HStack
+                        {
+                            Spacer()
+                            Text("\(name), \(String(format: "%d",quote.year))")
+                                .font(.subheadline)
+                                .shadow(radius: 3)
+                                .padding(.horizontal, 20)
+                                .offset(x: -10)
+                        }
+                    }
+                    .frame(height: 180)
+                    .padding(.vertical, 10)
+                    .offset(y: -5)
                 }
-                .frame(height: 180)
-                .padding(.vertical, 10)
-                .offset(y: -5)
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 25))
