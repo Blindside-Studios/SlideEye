@@ -16,10 +16,11 @@ struct AnalogueClock: View
     
     func calculateHourRotation() -> Double
     {
+        // add one second because due to animation, clock always lags behind by one second
         let daysPassed = days - beginningDays
         let hoursPassed = hours
         let minutesPassed = minutes
-        let secondsPassed = seconds
+        let secondsPassed = seconds + 1
 
         let totalHoursPassed = Double(secondsPassed) / 60 / 60 +
                                Double(minutesPassed) / 60 +
@@ -34,7 +35,7 @@ struct AnalogueClock: View
         let daysPassed = days - beginningDays
         let hoursPassed = hours - beginningHours
         let minutesPassed = minutes
-        let secondsPassed = seconds
+        let secondsPassed = seconds + 1
 
         let totalMinutesPassed = Double(secondsPassed) / 60 +
                                  Double(minutesPassed) +
@@ -49,7 +50,7 @@ struct AnalogueClock: View
         let daysPassed = days - beginningDays
         let hoursPassed = hours - beginningHours
         let minutesPassed = minutes - beginningMinutes
-        let secondsPassed = seconds
+        let secondsPassed = seconds + 1
 
         let totalSecondsPassed = Double(secondsPassed) +
                                  Double(minutesPassed) * 60 +
