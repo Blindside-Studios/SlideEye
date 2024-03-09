@@ -6,7 +6,7 @@ struct QuotesSharePage: View {
     var profilePicture: Image
     
     func sharePNGImage(_ view: some View, filename: String, subject: String, message: String) {
-        let image = view.snapshot()
+        /*let image = view.snapshot()
         if let pngData = image.pngData() {
             let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("\(filename).png")
             do {
@@ -21,7 +21,7 @@ struct QuotesSharePage: View {
             }
         } else {
             print("Failed to convert image to PNG data")
-        }
+        }*/
     }
     
     var body: some View {

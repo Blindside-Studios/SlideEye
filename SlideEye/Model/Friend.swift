@@ -77,16 +77,16 @@ extension Friend {
 }
 
 extension Friend {
-    init (id: Int, name: String, occupation: String, location: String, city: String, notes: String, imageName: String){
+    init (id: Int, name: String, occupation: String, location: String, city: String, country: String, continent: String, timeZoneID: String, isFavorite: Bool, notes: String, imageName: String){
         self.id = id
         self.name = name
         self.occupation = occupation
         self.location = location
         self.city = city
-        self.country = ""
-        self.continent = ""
-        self.timeZoneID = ""
-        self.isFavorite = false
+        self.country = country
+        self.continent = continent
+        self.timeZoneID = timeZoneID
+        self.isFavorite = isFavorite
         self.notes = notes
         self.imageName = imageName
         self.coordinates = Coordinates(latitude: 0, longitude: 0)
