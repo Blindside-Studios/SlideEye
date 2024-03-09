@@ -32,7 +32,7 @@ struct FriendsList: View {
     func constructFriendToAdd(friend: Friend, profilePicture: UIImage) -> Friend
     {
         let imageName = String(friend.id)
-        saveImage(image: profilePicture, imageName: imageName)
+        let result = saveImage(image: profilePicture, imageName: imageName)
         
         let constructedFriend = Friend(id: friend.id, name: friend.name, occupation: friend.occupation, location: friend.location, city: friend.city, notes: friend.notes, imageName: imageName)
         return constructedFriend

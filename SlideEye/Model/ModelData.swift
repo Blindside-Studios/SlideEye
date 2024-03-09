@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 @Observable
 class ModelData
@@ -12,20 +13,55 @@ class ModelData
     
     func loadExampleFriends()
     {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let url = paths[0]
+        
+        _ = saveImage(image: UIImage(named: "0001_00")!, imageName: "0001_00", url: url)
+        _ = saveImage(image: UIImage(named: "0002_00")!, imageName: "0002_00", url: url)
+        _ = saveImage(image: UIImage(named: "0003_00")!, imageName: "0003_00", url: url)
+        
         friends = loadHardcoded("FriendsData.json")
         saveChanges(friendsList: friends)
     }
     
+    private func saveImage(image: UIImage, imageName: String, url: URL) -> Bool {
+        if let imageData = image.jpegData(compressionQuality: 1) ?? image.pngData() {
+            let filename = url.appendingPathComponent(imageName)
+            do {
+                try imageData.write(to: filename, options: [.atomic, .completeFileProtection])
+                return true
+            } catch {
+                print("Unable to save image.")
+                return false
+            }
+        }
+        return false
+    }
+    
     func deleteAllFriends()
     {
-        let fileName = "FriendsData.json"
+        do {
+            let mainResult = deleteFile(fileName: "FriendsData.json")
+            
+            var i = 1001
+            while(true){
+                let result = deleteFile(fileName: String(i))
+                i+=1
+                if (result) {i+=1}
+                else {break}
+            }
+        }
+    }
+    
+    private func deleteFile(fileName: String) -> Bool
+    {
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentDirectory.appendingPathComponent(fileName)
 
         do {
-            try FileManager.default.removeItem(at: fileURL)
+            try FileManager.default.removeItem(at: fileURL); return true
         } catch {
-            fatalError("Couldn't delete file \(fileName): \(error)")
+            return false
         }
     }
 }
