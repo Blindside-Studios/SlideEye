@@ -6,6 +6,7 @@ struct FriendsList: View {
     
     @State private var sortByFavorites = false
     @State private var shouldPresentAddPeopleSheet = false
+    @State private var newFriendProfilePicture = UIImage(systemName: "person.fill")!
     
     var filteredFriends: [Friend] {
         modelData.friends.reversed().filter { friend in
@@ -19,14 +20,42 @@ struct FriendsList: View {
     
     public init(){
         _sortByFavorites = State(initialValue: false)
-        _shouldPresentAddPeopleSheet = State(initialValue: false)
-        // TODO: Set friend to an empty Friend object, because this code will not work if you don't already have friends!
-        
+        _shouldPresentAddPeopleSheet = State(initialValue: false)        
         _friendToAdd = State(initialValue: nullFriend)
     }
     
     func resetFriendToAdd(){
         friendToAdd = nullFriend
+        newFriendProfilePicture = UIImage(systemName: "person.fill")!
+    }
+    
+    func constructFriendToAdd(friend: Friend, profilePicture: UIImage) -> Friend
+    {
+        let imageName = String(friend.id)
+        saveImage(image: profilePicture, imageName: imageName)
+        
+        let constructedFriend = Friend(id: friend.id, name: friend.name, occupation: friend.occupation, location: friend.location, city: friend.city, notes: friend.notes, imageName: imageName)
+        return constructedFriend
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
+    }
+
+    // Function to save image data
+    func saveImage(image: UIImage, imageName: String) -> Bool {
+        if let imageData = image.jpegData(compressionQuality: 1) ?? image.pngData() {
+            let filename = getDocumentsDirectory().appendingPathComponent(imageName)
+            do {
+                try imageData.write(to: filename, options: [.atomic, .completeFileProtection])
+                return true
+            } catch {
+                print("Unable to save image.")
+                return false
+            }
+        }
+        return false
     }
     
     var body: some View {
@@ -50,7 +79,7 @@ struct FriendsList: View {
                     } content: {
                         ZStack
                         {
-                            NewFriendPage(friendDetails: $friendToAdd)
+                            NewFriendPage(friendDetails: $friendToAdd, profilePicture: $newFriendProfilePicture)
                             VStack{
                                 ZStack{
                                     Rectangle()
@@ -61,7 +90,8 @@ struct FriendsList: View {
                                         Spacer()
                                         Button("Save")
                                         {
-                                            modelData.friends.append(friendToAdd)
+                                            let addableFriend = constructFriendToAdd(friend: friendToAdd, profilePicture: newFriendProfilePicture)
+                                            modelData.friends.append(addableFriend)
                                             modelData.saveChanges(friendsList: modelData.friends)
                                             shouldPresentAddPeopleSheet.toggle()
                                             resetFriendToAdd()

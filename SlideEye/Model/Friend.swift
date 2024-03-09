@@ -19,18 +19,20 @@ struct Friend: Hashable, Codable, Identifiable{
     // the profile picture
     private var imageName: String
     var profilePicture: Image {
-        get {
-            Image(imageName)
-        }
-        set(newImage) {
-            // Assuming you have a way to convert from Image to a imageName string
-            // Update imageName with the new value
-            // imageName = convertImageToName(newImage)
-        }
+        loadImage(imageName: imageName) ?? Image(systemName: "wrongwaysign")
     }
     
-    private func convertImageToName(_ image: Image) -> String {
-        return String(id)
+    func loadImage(imageName: String) -> Image? {
+        let filename = getDocumentsDirectory().appendingPathComponent(imageName)
+        if let uiImage = UIImage(contentsOfFile: filename.path) {
+            return Image(uiImage: uiImage)
+        }
+        return nil
+    }
+    
+    func getDocumentsDirectory() -> URL {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        return paths[0]
     }
     
     // location
@@ -71,5 +73,23 @@ extension Friend {
         self.imageName = ""
         self.coordinates = Coordinates(latitude: 0, longitude: 0)
         self.quotes = quotes
+    }
+}
+
+extension Friend {
+    init (id: Int, name: String, occupation: String, location: String, city: String, notes: String, imageName: String){
+        self.id = id
+        self.name = name
+        self.occupation = occupation
+        self.location = location
+        self.city = city
+        self.country = ""
+        self.continent = ""
+        self.timeZoneID = ""
+        self.isFavorite = false
+        self.notes = notes
+        self.imageName = imageName
+        self.coordinates = Coordinates(latitude: 0, longitude: 0)
+        self.quotes = [Quote(id: 100, text: "Tap the plus at the top to get started adding your own quotes", year: 2077)]
     }
 }

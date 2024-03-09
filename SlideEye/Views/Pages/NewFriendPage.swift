@@ -4,6 +4,7 @@ import PhotosUI
 struct NewFriendPage: View {
     @Environment(ModelData.self) var modelData
     @Binding var friendDetails: Friend
+    @Binding var profilePicture: UIImage
     
     @State private var showingImagePicker = false
     @State private var inputImage: UIImage?
@@ -41,7 +42,7 @@ struct NewFriendPage: View {
                 Section("Profile Picture"){
                     ZStack
                     {
-                        friendDetails.profilePicture
+                        Image(uiImage: profilePicture)
                             .resizable()
                             .scaledToFit()
                         
@@ -132,7 +133,7 @@ struct NewFriendPage: View {
             let sideLength = min(inputImage.size.width, inputImage.size.height)
             let squareCropRect = CGRect(x: (inputImage.size.width - sideLength) / 2, y: (inputImage.size.height - sideLength) / 2, width: sideLength, height: sideLength)
             if let croppedCGImage = inputImage.cgImage?.cropping(to: squareCropRect) {
-                friendDetails.profilePicture = Image(uiImage: UIImage(cgImage: croppedCGImage))
+                profilePicture = UIImage(cgImage: croppedCGImage)
             }
         }
     }
@@ -177,6 +178,6 @@ struct PhotoPicker: UIViewControllerRepresentable {
     }
 }
 
-#Preview {
-    NewFriendPage(friendDetails: .constant(ModelData().friends[0]))
-}
+/*#Preview {
+    NewFriendPage(friendDetails: .constant(ModelData().friends[0]), profilePicture: .constant(nil))
+}*/
