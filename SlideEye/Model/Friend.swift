@@ -19,7 +19,18 @@ struct Friend: Hashable, Codable, Identifiable{
     // the profile picture
     private var imageName: String
     var profilePicture: Image {
-        Image(imageName)
+        get {
+            Image(imageName)
+        }
+        set(newImage) {
+            // Assuming you have a way to convert from Image to a imageName string
+            // Update imageName with the new value
+            // imageName = convertImageToName(newImage)
+        }
+    }
+    
+    private func convertImageToName(_ image: Image) -> String {
+        return String(id)
     }
     
     // location

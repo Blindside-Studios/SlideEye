@@ -1,8 +1,12 @@
 import SwiftUI
+import PhotosUI
 
 struct NewFriendPage: View {
     @Environment(ModelData.self) var modelData
     @Binding var friendDetails: Friend
+    
+    @State private var showingImagePicker = false
+    @State private var inputImage: UIImage?
     
     func findCityDetails()
     {
@@ -13,7 +17,7 @@ struct NewFriendPage: View {
     {
         var id = 1001
         
-        var friendsList = ModelData().friends
+        let friendsList = ModelData().friends
         if (friendsList.count > 0)
         {
              id = friendsList.last!.id + 1
@@ -35,7 +39,34 @@ struct NewFriendPage: View {
                 .offset(y: 30)
                 
                 Section("Profile Picture"){
-                    friendDetails.profilePicture
+                    ZStack
+                    {
+                        friendDetails.profilePicture
+                            .resizable()
+                            .scaledToFit()
+                        
+                        Group
+                        {
+                            Rectangle()
+                                .fill(.bar)
+                                .frame(width: 100, height: 100)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                                .shadow(radius: 10)
+                                .mask(
+                                    Image(systemName: "person.and.background.dotted")
+                                        .resizable()
+                                        .frame(width: 50, height: 50)
+                                        .foregroundStyle(.white)
+                                )
+                            
+                        }
+                        .onTapGesture(perform: {
+                            self.showingImagePicker = true
+                        })
+                    }
+                    
+                    
+                    /*friendDetails.profilePicture
                         .resizable()
                         .scaledToFit()
                         .overlay(alignment: .bottomTrailing) {
@@ -48,8 +79,11 @@ struct NewFriendPage: View {
                              .foregroundColor(.accentColor)
                              }
                              .buttonStyle(.borderless)*/
-                        }
+                        }*/
                 }
+                .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                            PhotoPicker(image: self.$inputImage)
+                        }
                 
                 Section("Occupation"){
                     TextField("Occupation", text: $friendDetails.occupation)
@@ -90,6 +124,56 @@ struct NewFriendPage: View {
         .onAppear(perform: {
             friendDetails.id = calculateID()
         })
+    }
+    
+    func loadImage() {
+            guard let inputImage = inputImage else { return }
+            // Crop the image to a square based on the smallest dimension
+            let sideLength = min(inputImage.size.width, inputImage.size.height)
+            let squareCropRect = CGRect(x: (inputImage.size.width - sideLength) / 2, y: (inputImage.size.height - sideLength) / 2, width: sideLength, height: sideLength)
+            if let croppedCGImage = inputImage.cgImage?.cropping(to: squareCropRect) {
+                friendDetails.profilePicture = Image(uiImage: UIImage(cgImage: croppedCGImage))
+            }
+        }
+    }
+
+struct PhotoPicker: UIViewControllerRepresentable {
+    @Binding var image: UIImage?
+    
+    func makeUIViewController(context: Context) -> some UIViewController {
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        config.filter = .images
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = context.coordinator
+        return picker
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {}
+    
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+    
+    class Coordinator: NSObject, PHPickerViewControllerDelegate {
+        var parent: PhotoPicker
+        
+        init(_ parent: PhotoPicker) {
+            self.parent = parent
+        }
+        
+        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+            picker.dismiss(animated: true)
+            
+            guard let provider = results.first?.itemProvider else { return }
+            if provider.canLoadObject(ofClass: UIImage.self) {
+                provider.loadObject(ofClass: UIImage.self) { image, _ in
+                    DispatchQueue.main.async {
+                        self.parent.image = image as? UIImage
+                    }
+                }
+            }
+        }
     }
 }
 
