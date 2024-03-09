@@ -9,6 +9,20 @@ struct NewFriendPage: View {
         // TODO: implement automated timezone finding
     }
     
+    func calculateID() -> Int
+    {
+        var id = 1001
+        
+        var friendsList = ModelData().friends
+        if (friendsList.count > 0)
+        {
+             id = friendsList.last!.id + 1
+        }
+        else { }
+        
+        return id
+    }
+    
     var body: some View {
         List
         {
@@ -73,6 +87,9 @@ struct NewFriendPage: View {
                 }
             }
         }
+        .onAppear(perform: {
+            friendDetails.id = calculateID()
+        })
     }
 }
 
