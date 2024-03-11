@@ -41,7 +41,7 @@ class ModelData
     func deleteAllFriends()
     {
         do {
-            let mainResult = deleteFile(fileName: "FriendsData.json")
+            _ = deleteFile(fileName: "FriendsData.json")
             
             var i = 1001
             while(true){

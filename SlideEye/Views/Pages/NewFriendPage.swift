@@ -46,20 +46,17 @@ struct NewFriendPage: View {
                             .resizable()
                             .scaledToFit()
                         
-                        Group
+                        ZStack
                         {
                             Rectangle()
                                 .fill(.bar)
                                 .frame(width: 100, height: 100)
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .shadow(radius: 10)
-                                .mask(
-                                    Image(systemName: "person.and.background.dotted")
-                                        .resizable()
-                                        .frame(width: 50, height: 50)
-                                        .foregroundStyle(.white)
-                                )
-                            
+                            Image(systemName: "person.and.background.dotted")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundStyle(.white)
                         }
                         .gesture(TapGesture().onEnded {
                             self.showingImagePicker.toggle()
