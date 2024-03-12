@@ -73,6 +73,7 @@ struct FriendsList: View {
                     
                     Button(action: {
                         modelData.deleteAllFriends()
+                        modelData.friends.removeAll()
                     }) {
                         Text("Remove All Saved Friends")
                     }
@@ -116,6 +117,34 @@ struct FriendsList: View {
                             Spacer()
                         }
                         .shadow(radius: 10)
+                    }
+                }
+                
+                Section(){
+                    if (modelData.friends.isEmpty)
+                    {
+                        HStack
+                        {
+                            Spacer()
+                            VStack
+                            {
+                                Group
+                                {
+                                    Image(systemName: "eyes")
+                                    Image(systemName: "nose.fill")
+                                    Image(systemName: "mustache.fill")
+                                    Image(systemName: "mouth.fill")
+                                }
+                                Text("There is nothing here yet...")
+                                Button {
+                                    shouldPresentAddPeopleSheet.toggle()
+                                } label: {
+                                    Text("Add new friend...")
+                                        .foregroundStyle(.blue)
+                                }
+                            }
+                            Spacer()
+                        }
                     }
                 }
             }
