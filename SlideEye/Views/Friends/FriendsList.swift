@@ -63,49 +63,6 @@ struct FriendsList: View {
         {
             List
             {
-                Section
-                {
-                    HStack {
-                        ProfilePicture(image: Image(systemName: "plus"))
-                            .image.frame(width: 200, height: 200)
-                            .frame(width: 50, height: 50)
-                        Text("Add new friend...")
-                        Spacer()
-                    }
-                    .gesture(TapGesture().onEnded {
-                        shouldPresentAddPeopleSheet.toggle()
-                    })
-                    .sheet(isPresented: $shouldPresentAddPeopleSheet){
-                    } content: {
-                        ZStack
-                        {
-                            NewFriendPage(friendDetails: $friendToAdd, profilePicture: $newFriendProfilePicture)
-                            VStack{
-                                ZStack{
-                                    Rectangle()
-                                        .foregroundStyle(.bar)
-                                        .frame(height: 50)
-                                    HStack{
-                                        Button("Cancel") { shouldPresentAddPeopleSheet.toggle(); resetFriendToAdd() }
-                                        Spacer()
-                                        Button("Save")
-                                        {
-                                            let addableFriend = constructFriendToAdd(friend: friendToAdd, profilePicture: newFriendProfilePicture)
-                                            modelData.friends.append(addableFriend)
-                                            modelData.saveChanges(friendsList: modelData.friends)
-                                            shouldPresentAddPeopleSheet.toggle()
-                                            resetFriendToAdd()
-                                        }
-                                    }
-                                    .padding(15)
-                                }
-                                Spacer()
-                            }
-                            .shadow(radius: 10)
-                        }
-                    }
-                }
-                
                 Section("Debug")
                 {
                     Button(action: {
@@ -123,15 +80,6 @@ struct FriendsList: View {
                 
                 Section
                 {
-                    HStack
-                    {
-                        ProfilePicture(image: Image(systemName: "star"))
-                            .image.frame(width: 200, height: 200)
-                            .frame(width: 50, height: 50)
-                        Toggle (isOn: $sortByFavorites) { Text("Favorites only") }
-                            .frame(height: 50)
-                    }
-                
                     ForEach(filteredFriends)
                     { friend in
                         NavigationLink {
@@ -141,9 +89,51 @@ struct FriendsList: View {
                         }
                     }
                 }
+                .sheet(isPresented: $shouldPresentAddPeopleSheet){
+                } content: {
+                    ZStack
+                    {
+                        NewFriendPage(friendDetails: $friendToAdd, profilePicture: $newFriendProfilePicture)
+                        VStack{
+                            ZStack{
+                                Rectangle()
+                                    .foregroundStyle(.bar)
+                                    .frame(height: 50)
+                                HStack{
+                                    Button("Cancel") { shouldPresentAddPeopleSheet.toggle(); resetFriendToAdd() }
+                                    Spacer()
+                                    Button("Save")
+                                    {
+                                        let addableFriend = constructFriendToAdd(friend: friendToAdd, profilePicture: newFriendProfilePicture)
+                                        modelData.friends.append(addableFriend)
+                                        modelData.saveChanges(friendsList: modelData.friends)
+                                        shouldPresentAddPeopleSheet.toggle()
+                                        resetFriendToAdd()
+                                    }
+                                }
+                                .padding(15)
+                            }
+                            Spacer()
+                        }
+                        .shadow(radius: 10)
+                    }
+                }
             }
             .animation(.default, value: filteredFriends)
             .navigationTitle("My friends")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    FavoriteButton(isSet: $sortByFavorites)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        shouldPresentAddPeopleSheet.toggle()
+                    } label: {
+                        Label("Add new friend...", systemImage: "plus")
+                            .labelStyle(.iconOnly)
+                    }
+                }
+            }
         } detail: {
             Text("Pick a friend")
         }
