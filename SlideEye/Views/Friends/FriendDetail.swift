@@ -61,7 +61,6 @@ struct FriendDetail: View {
                             Text(friend.location + ", " + friend.country)
                                 .fontWeight(.bold)
                             Spacer()
-                            FavoriteButton(isSet: $modelData.friends[friendIndex].isFavorite)
                         }
                         .font(.title2)
                         .padding(.horizontal)
@@ -178,6 +177,11 @@ struct FriendDetail: View {
             }
             .navigationTitle(friend.name)
             .navigationBarTitleDisplayMode(.large)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    FavoriteButton(isSet: $modelData.friends[friendIndex].isFavorite)
+                }
+            }
         }
         // TODO: Reenable this after finding a non-deprecated alternative, low priority
         /*.onChange(of: shouldPresentNotesSheet) { newValue in
