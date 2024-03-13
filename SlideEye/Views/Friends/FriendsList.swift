@@ -8,6 +8,10 @@ struct FriendsList: View {
     @State private var shouldPresentAddPeopleSheet = false
     @State private var newFriendProfilePicture = UIImage(systemName: "person.fill")!
     
+    @State private var showingDeletionConfirmationDialogue = false
+    @State private var deletedFriendName = "UNIDENTIFIED_FRIEND"
+    @State private var deleteFriendIndex = 0
+    
     var filteredFriends: [Friend] {
         modelData.friends.reversed().filter { friend in
             (!sortByFavorites || friend.isFavorite)
@@ -58,6 +62,19 @@ struct FriendsList: View {
         return false
     }
     
+    func toggleIsFavoriteOnFriend(friendID: Int){
+        let friendIndex = modelData.friends.firstIndex(where: { $0.id == friendID })!
+        modelData.friends[friendIndex].isFavorite.toggle()
+        modelData.saveLocalChanges()
+    }
+    
+    func deleteFriend(friendID: Int){
+        let friendIndex = modelData.friends.firstIndex(where: { $0.id == friendID })!
+        deleteFriendIndex = friendIndex
+        deletedFriendName = modelData.friends[friendIndex].name
+        showingDeletionConfirmationDialogue.toggle()
+    }
+    
     var body: some View {
         NavigationSplitView
         {
@@ -87,8 +104,31 @@ struct FriendsList: View {
                             FriendDetail(friend: friend)
                         } label: {
                             FriendRow(friend: friend)
+                                .contextMenu {
+                                    Button {
+                                        toggleIsFavoriteOnFriend(friendID: friend.id)
+                                    } label: {
+                                        if (friend.isFavorite) { Label("Unfavorite", systemImage: "star.slash.fill") }
+                                        else { Label("Favorite", systemImage: "star.fill") }
+                                    }
+                                    Divider()
+                                    Button(role: .destructive, action: {
+                                        deleteFriend(friendID: friend.id)
+                                    }) {
+                                        Label("Delete", systemImage: "trash")
+                                    }
+                                }
                         }
                     }
+                    .confirmationDialog("Are you sure?", isPresented: $showingDeletionConfirmationDialogue) {
+                            Button("Delete", role: .destructive) {
+                                    modelData.friends.remove(at: deleteFriendIndex)
+                                    modelData.saveLocalChanges()
+                            }
+                            Button("Cancel", role: .cancel) { showingDeletionConfirmationDialogue = false }
+                        } message: {
+                            Text("\(deletedFriendName) will be permanently deleted. This cannot be undone.")
+                        }
                 }
                 
                 Section(){
