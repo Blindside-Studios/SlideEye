@@ -62,25 +62,6 @@ struct FriendsList: View {
         return false
     }
     
-    func toggleIsFavoriteOnFriend(friendID: Int){
-        let friendIndex = modelData.friends.firstIndex(where: { $0.id == friendID })!
-        modelData.friends[friendIndex].isFavorite.toggle()
-        modelData.saveLocalChanges()
-    }
-    
-    func toggleIsPinnedOnFriend(friendID: Int){
-        let friendIndex = modelData.friends.firstIndex(where: { $0.id == friendID })!
-        modelData.friends[friendIndex].isPinned.toggle()
-        modelData.saveLocalChanges()
-    }
-    
-    func deleteFriend(friendID: Int){
-        let friendIndex = modelData.friends.firstIndex(where: { $0.id == friendID })!
-        deleteFriendIndex = friendIndex
-        deletedFriendName = modelData.friends[friendIndex].name
-        showingDeletionConfirmationDialogue.toggle()
-    }
-    
     var body: some View {
         NavigationSplitView
         {
@@ -107,54 +88,7 @@ struct FriendsList: View {
                     {
                         ForEach(filteredFriends.filter { $0.isPinned })
                         { friend in
-                            NavigationLink {
-                                FriendDetail(friend: friend)
-                            } label: {
-                                FriendRow(friend: friend)
-                                    .contextMenu {
-                                        Button {
-                                            toggleIsFavoriteOnFriend(friendID: friend.id)
-                                        } label: {
-                                            if (friend.isFavorite) { Label("Unfavorite", systemImage: "star.slash.fill") }
-                                            else { Label("Favorite", systemImage: "star.fill") }
-                                        }
-                                        Button {
-                                            toggleIsPinnedOnFriend(friendID: friend.id)
-                                        } label: {
-                                            if (friend.isPinned) { Label("Unpin", systemImage: "pin.slash.fill") }
-                                            else { Label("Pin", systemImage: "pin.fill") }
-                                        }
-                                        Divider()
-                                        Button(role: .destructive, action: {
-                                            deleteFriend(friendID: friend.id)
-                                        }) {
-                                            Label("Delete", systemImage: "trash")
-                                        }
-                                    }
-                            }
-                            .swipeActions(edge: .leading) {
-                                Button {
-                                    toggleIsFavoriteOnFriend(friendID: friend.id)
-                                } label: {
-                                    if (friend.isFavorite) { Label("Unfavorite", systemImage: "star.slash.fill") }
-                                    else { Label("Favorite", systemImage: "star.fill") }
-                                }
-                            }
-                            .swipeActions(edge: .leading) {
-                                Button {
-                                    toggleIsPinnedOnFriend(friendID: friend.id)
-                                } label: {
-                                    if (friend.isPinned) { Label("Unpin", systemImage: "pin.slash.fill") }
-                                    else { Label("Pin", systemImage: "pin.fill") }
-                                }
-                            }
-                            .swipeActions(edge: .trailing) {
-                                Button {
-                                    deleteFriend(friendID: friend.id)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+                            FriendRow(friend: friend)
                         }
                     }
                 }
@@ -163,54 +97,7 @@ struct FriendsList: View {
                 {
                     ForEach(filteredFriends.filter { !$0.isPinned })
                     { friend in
-                        NavigationLink {
-                            FriendDetail(friend: friend)
-                        } label: {
-                            FriendRow(friend: friend)
-                                .contextMenu {
-                                    Button {
-                                        toggleIsFavoriteOnFriend(friendID: friend.id)
-                                    } label: {
-                                        if (friend.isFavorite) { Label("Unfavorite", systemImage: "star.slash.fill") }
-                                        else { Label("Favorite", systemImage: "star.fill") }
-                                    }
-                                    Button {
-                                        toggleIsPinnedOnFriend(friendID: friend.id)
-                                    } label: {
-                                        if (friend.isPinned) { Label("Unpin", systemImage: "pin.slash.fill") }
-                                        else { Label("Pin", systemImage: "pin.fill") }
-                                    }
-                                    Divider()
-                                    Button(role: .destructive, action: {
-                                        deleteFriend(friendID: friend.id)
-                                    }) {
-                                        Label("Delete", systemImage: "trash")
-                                    }
-                                }
-                        }
-                        .swipeActions(edge: .leading) {
-                                Button {
-                                    toggleIsFavoriteOnFriend(friendID: friend.id)
-                                } label: {
-                                    if (friend.isFavorite) { Label("Unfavorite", systemImage: "star.slash.fill") }
-                                    else { Label("Favorite", systemImage: "star.fill") }
-                                }
-                            }
-                        .swipeActions(edge: .leading) {
-                                Button {
-                                    toggleIsPinnedOnFriend(friendID: friend.id)
-                                } label: {
-                                    if (friend.isPinned) { Label("Unpin", systemImage: "pin.slash.fill") }
-                                    else { Label("Pin", systemImage: "pin.fill") }
-                                }
-                            }
-                        .swipeActions(edge: .trailing) {
-                                Button {
-                                    deleteFriend(friendID: friend.id)
-                                } label: {
-                                    Label("Delete", systemImage: "trash")
-                                }
-                            }
+                        FriendRow(friend: friend)
                     }
                 }
                 
@@ -257,15 +144,6 @@ struct FriendsList: View {
                     }
                 }
             }
-            .confirmationDialog("Are you sure?", isPresented: $showingDeletionConfirmationDialogue) {
-                    Button("Delete", role: .destructive) {
-                            modelData.friends.remove(at: deleteFriendIndex)
-                            modelData.saveLocalChanges()
-                    }
-                    Button("Cancel", role: .cancel) { showingDeletionConfirmationDialogue = false }
-                } message: {
-                    Text("\(deletedFriendName) will be permanently deleted. This cannot be undone.")
-                }
         } detail: {
             Text("Pick a friend")
         }
