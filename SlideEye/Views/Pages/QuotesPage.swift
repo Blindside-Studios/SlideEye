@@ -59,6 +59,7 @@ struct QuotesPage: View {
                             .padding(.horizontal)
                             .frame(height: 200)
                             .shadow(radius: 10)
+                            .transition(.asymmetric(insertion: .slide, removal: .slide))
                             .contextMenu {
                                 Button {
                                     renderQuote(quote: quote)
