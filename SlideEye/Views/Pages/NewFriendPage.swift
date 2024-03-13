@@ -63,9 +63,6 @@ struct NewFriendPage: View {
                         })
                     }
                 }
-                .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
-                            PhotoPicker(image: self.$inputImage)
-                        }
                 
                 Section("Occupation"){
                     TextField("Occupation", text: $friendDetails.occupation)
@@ -103,6 +100,9 @@ struct NewFriendPage: View {
                 }
             }
         }
+        .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                    PhotoPicker(image: self.$inputImage)
+                }
         .onAppear(perform: {
             friendDetails.id = calculateID()
         })

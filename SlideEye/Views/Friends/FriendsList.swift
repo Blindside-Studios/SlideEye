@@ -90,35 +90,6 @@ struct FriendsList: View {
                         }
                     }
                 }
-                .sheet(isPresented: $shouldPresentAddPeopleSheet){
-                } content: {
-                    ZStack
-                    {
-                        NewFriendPage(friendDetails: $friendToAdd, profilePicture: $newFriendProfilePicture)
-                        VStack{
-                            ZStack{
-                                Rectangle()
-                                    .foregroundStyle(.bar)
-                                    .frame(height: 50)
-                                HStack{
-                                    Button("Cancel") { shouldPresentAddPeopleSheet.toggle(); resetFriendToAdd() }
-                                    Spacer()
-                                    Button("Save")
-                                    {
-                                        let addableFriend = constructFriendToAdd(friend: friendToAdd, profilePicture: newFriendProfilePicture)
-                                        modelData.friends.append(addableFriend)
-                                        modelData.saveChanges(friendsList: modelData.friends)
-                                        shouldPresentAddPeopleSheet.toggle()
-                                        resetFriendToAdd()
-                                    }
-                                }
-                                .padding(15)
-                            }
-                            Spacer()
-                        }
-                        .shadow(radius: 10)
-                    }
-                }
                 
                 Section(){
                     if (modelData.friends.isEmpty)
@@ -165,6 +136,35 @@ struct FriendsList: View {
             }
         } detail: {
             Text("Pick a friend")
+        }
+        .sheet(isPresented: $shouldPresentAddPeopleSheet){
+        } content: {
+            ZStack
+            {
+                NewFriendPage(friendDetails: $friendToAdd, profilePicture: $newFriendProfilePicture)
+                VStack{
+                    ZStack{
+                        Rectangle()
+                            .foregroundStyle(.bar)
+                            .frame(height: 50)
+                        HStack{
+                            Button("Cancel") { shouldPresentAddPeopleSheet.toggle(); resetFriendToAdd() }
+                            Spacer()
+                            Button("Save")
+                            {
+                                let addableFriend = constructFriendToAdd(friend: friendToAdd, profilePicture: newFriendProfilePicture)
+                                modelData.friends.append(addableFriend)
+                                modelData.saveChanges(friendsList: modelData.friends)
+                                shouldPresentAddPeopleSheet.toggle()
+                                resetFriendToAdd()
+                            }
+                        }
+                        .padding(15)
+                    }
+                    Spacer()
+                }
+                .shadow(radius: 10)
+            }
         }
         
         // TODO: this does not work, fix it, miraculix
