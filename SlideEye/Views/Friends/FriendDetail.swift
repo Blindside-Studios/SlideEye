@@ -10,6 +10,7 @@ struct FriendDetail: View {
     @State private var shouldPresentQuotesSheet = false
     @State private var friendNotes: String
     @State private var friendQuotes: [Friend.Quote]
+    @State private var friendIsFavorite: Bool
     
     // for QuotesPage
     @State private var shouldPresentAddNewQuoteSheet: Bool
@@ -24,10 +25,19 @@ struct FriendDetail: View {
         self.friend = friend
         _friendNotes = State(initialValue: friend.notes)
         _friendQuotes = State(initialValue: friend.quotes)
+        _friendIsFavorite = State(initialValue: friend.isFavorite)
         
         _shouldPresentAddNewQuoteSheet = State(initialValue: false)
         //TODO: load sortQuotesByYear from user preferences
         _sortQuotesByYear = State(initialValue: false)
+    }
+    
+    func updateFriendsList(){
+        var newFriendsList = modelData.friends
+        newFriendsList[friendIndex].notes = friendNotes
+        // TODO: Make this integration work
+        newFriendsList[friendIndex].isFavorite = friendIsFavorite
+        save("FriendsData.json", newFriendsList)
     }
     
     var body: some View {
@@ -93,7 +103,7 @@ struct FriendDetail: View {
                                     HStack{
                                         Text(friend.name+"'s notes")
                                         Spacer()
-                                        Button("Done") { shouldPresentNotesSheet.toggle() }
+                                        Button("Done") { shouldPresentNotesSheet.toggle(); updateFriendsList() }
                                     }
                                     .padding(15)
                                 }
@@ -180,6 +190,10 @@ struct FriendDetail: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     FavoriteButton(isSet: $modelData.friends[friendIndex].isFavorite)
+                        .onTapGesture {
+                            friendIsFavorite.toggle()
+                            updateFriendsList()
+                        }
                 }
             }
         }
