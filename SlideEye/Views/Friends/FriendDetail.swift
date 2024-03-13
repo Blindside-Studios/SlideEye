@@ -11,7 +11,6 @@ struct FriendDetail: View {
     @State private var friendNotes: String
     @State private var friendQuotes: [Friend.Quote]
     
-    // for QuotesPage
     @State private var shouldPresentAddNewQuoteSheet: Bool
     @State private var sortQuotesByYear: Bool
     
@@ -145,6 +144,7 @@ struct FriendDetail: View {
                             }
                             .shadow(radius: 5)
                         }
+                        .onChange(of: friendQuotes, {modelData.friends[friendIndex].quotes = friendQuotes; modelData.saveLocalChanges()})
                     }
                 
                 MapView(coordinate: friend.locationCoordinate)

@@ -67,7 +67,8 @@ struct QuotesPage: View {
                                 }
                                 Divider()
                                 Button(role: .destructive, action: {
-                                    // TODO: Add deleting
+                                    let quoteIndex = quotes.firstIndex(where: { $0.id == quote.id })!
+                                    quotes.remove(at: quoteIndex)
                                 }) {
                                     Label("Delete", systemImage: "trash")
                                 }
