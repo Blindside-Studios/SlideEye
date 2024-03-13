@@ -119,6 +119,29 @@ struct FriendsList: View {
                                     }
                                 }
                         }
+                        .swipeActions(edge: .leading) {
+                                Button {
+                                    toggleIsFavoriteOnFriend(friendID: friend.id)
+                                } label: {
+                                    if (friend.isFavorite) { Label("Unfavorite", systemImage: "star.slash.fill") }
+                                    else { Label("Favorite", systemImage: "star.fill") }
+                                }
+                            }
+                        /*.swipeActions(edge: .leading) {
+                                Button {
+                                    //toggleIsFavoriteOnFriend(friendID: friend.id)
+                                } label: {
+                                    if (friend.isFavorite) { Label("Unpin", systemImage: "pin.slash.fill") }
+                                    else { Label("Pin", systemImage: "pin.fill") }
+                                }
+                            }*/
+                        .swipeActions(edge: .trailing) {
+                                Button {
+                                    deleteFriend(friendID: friend.id)
+                                } label: {
+                                    Label("Delete", systemImage: "trash")
+                                }
+                            }
                     }
                     .confirmationDialog("Are you sure?", isPresented: $showingDeletionConfirmationDialogue) {
                             Button("Delete", role: .destructive) {
