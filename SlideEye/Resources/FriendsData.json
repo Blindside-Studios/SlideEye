@@ -8,6 +8,7 @@
         "timeZoneID": "America/Lima",
         "id": 1001,
         "isFavorite": true,
+        "isPinned": true,
         "occupation": "Archeologist",
         "coordinates": {
             "longitude": -77.030864,
@@ -47,6 +48,7 @@
         "timeZoneID": "America/Havana",
         "id": 1002,
         "isFavorite": true,
+        "isPinned": false,
         "occupation": "Guerilla Fighter",
         "coordinates": {
             "longitude": -75.713628,
@@ -76,6 +78,7 @@
         "timeZoneID": "Europe/Rome",
         "id": 1003,
         "isFavorite": false,
+        "isPinned": false,
         "occupation": "''Model''",
         "coordinates": {
             "longitude": 12.048826,

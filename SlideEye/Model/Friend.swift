@@ -14,6 +14,7 @@ struct Friend: Hashable, Codable, Identifiable{
     var continent: String
     var timeZoneID: String
     var isFavorite: Bool
+    var isPinned: Bool
     var notes: String
     
     // the profile picture
@@ -69,6 +70,7 @@ extension Friend {
         self.continent = ""
         self.timeZoneID = ""
         self.isFavorite = false
+        self.isPinned = false
         self.notes = ""
         self.imageName = ""
         self.coordinates = Coordinates(latitude: 0, longitude: 0)
@@ -87,6 +89,7 @@ extension Friend {
         self.continent = continent
         self.timeZoneID = timeZoneID
         self.isFavorite = isFavorite
+        self.isPinned = false
         self.notes = notes
         self.imageName = imageName
         self.coordinates = Coordinates(latitude: 0, longitude: 0)
