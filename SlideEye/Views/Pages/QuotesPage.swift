@@ -67,15 +67,13 @@ struct QuotesPage: View {
                                 }
                                 Divider()
                                 Button(role: .destructive, action: {
-                                    let quoteIndex = quotes.firstIndex(where: { $0.id == quote.id })!
-                                    quotes.remove(at: quoteIndex)
+                                    quotes.removeAll { $0.id == quote.id }
                                 }) {
                                     Label("Delete", systemImage: "trash")
                                 }
                             }
                     }
                 }
-
                 .animation(.bouncy(duration: 0.5), value: sortedQuotes)
                 .padding(.vertical, 35)
                 .offset(y: 35)
