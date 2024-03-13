@@ -11,6 +11,10 @@ class ModelData
         save("FriendsData.json", friends)
     }
     
+    func saveLocalChanges(){
+        save("FriendsData.json", friends)
+    }
+    
     func loadExampleFriends()
     {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

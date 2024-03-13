@@ -10,7 +10,6 @@ struct FriendDetail: View {
     @State private var shouldPresentQuotesSheet = false
     @State private var friendNotes: String
     @State private var friendQuotes: [Friend.Quote]
-    @State private var friendIsFavorite: Bool
     
     // for QuotesPage
     @State private var shouldPresentAddNewQuoteSheet: Bool
@@ -25,7 +24,6 @@ struct FriendDetail: View {
         self.friend = friend
         _friendNotes = State(initialValue: friend.notes)
         _friendQuotes = State(initialValue: friend.quotes)
-        _friendIsFavorite = State(initialValue: friend.isFavorite)
         
         _shouldPresentAddNewQuoteSheet = State(initialValue: false)
         //TODO: load sortQuotesByYear from user preferences
@@ -33,11 +31,9 @@ struct FriendDetail: View {
     }
     
     func updateFriendsList(){
-        var newFriendsList = modelData.friends
-        newFriendsList[friendIndex].notes = friendNotes
-        // TODO: Make this integration work
-        newFriendsList[friendIndex].isFavorite = friendIsFavorite
-        save("FriendsData.json", newFriendsList)
+        modelData.friends[friendIndex] = friend
+        modelData.friends[friendIndex].notes = friendNotes
+        modelData.saveLocalChanges()
     }
     
     var body: some View {
@@ -190,19 +186,10 @@ struct FriendDetail: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     FavoriteButton(isSet: $modelData.friends[friendIndex].isFavorite)
-                        .onTapGesture {
-                            friendIsFavorite.toggle()
-                            updateFriendsList()
-                        }
                 }
             }
+            .onChange(of: modelData.friends[friendIndex].isFavorite, {modelData.saveLocalChanges()})
         }
-        // TODO: Reenable this after finding a non-deprecated alternative, low priority
-        /*.onChange(of: shouldPresentNotesSheet) { newValue in
-            if !newValue {
-                modelData.saveChanges(friend: friend, index: friendIndex)
-            }
-        }*/
     }
 }
 
