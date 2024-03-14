@@ -58,6 +58,9 @@ struct ClockWidget: View {
         }
         .frame(height: 200)
         .clipShape(RoundedRectangle(cornerRadius: 25))
+        .padding(.horizontal, 15)
+        .padding(.vertical, 5)
+        .shadow(radius: 10)
     }
     
     func setDateComponents() {

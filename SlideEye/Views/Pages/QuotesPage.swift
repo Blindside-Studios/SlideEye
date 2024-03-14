@@ -55,10 +55,7 @@ struct QuotesPage: View {
                 {
                     ForEach(sortedQuotes)
                     { quote in
-                        QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: true)
-                            .padding(.horizontal)
-                            .frame(height: 200)
-                            .shadow(radius: 10)
+                        QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: true, friend: Friend(id: 000, quotes: []), friendQuotes: .constant([Friend.Quote(id: 0, text: "qwerty", year: 0000)]), shouldPresentQuotesSheet: .constant(false), shouldPresentAddNewQuoteSheet: .constant(false), sortQuotesByYear: .constant(false), allowSheet: false)
                             .transition(.asymmetric(insertion: .slide, removal: .slide))
                             .contextMenu {
                                 Button {

@@ -1,12 +1,19 @@
 import SwiftUI
 
 struct QuotesWidget: View {
+    @Environment(ModelData.self) var modelData
+    @Environment(\.colorScheme) var colorScheme
+    
     var name: String
     var quote: Friend.Quote
     var profilePicture: Image
     var useTransparency: Bool
-    
-    @Environment(\.colorScheme) var colorScheme
+    var friend: Friend
+    @Binding var friendQuotes: [Friend.Quote]
+    @Binding var shouldPresentQuotesSheet: Bool
+    @Binding var shouldPresentAddNewQuoteSheet: Bool
+    @Binding var sortQuotesByYear: Bool
+    var allowSheet: Bool
     
     @State var textBoxHeight: CGFloat = 0
     
@@ -101,6 +108,42 @@ struct QuotesWidget: View {
             }
         }
         .clipShape(RoundedRectangle(cornerRadius: 25))
+        .padding(.horizontal, 15)
+        .padding(.vertical, 5)
+        .shadow(radius: 10)
+        .gesture(TapGesture().onEnded {
+            if (allowSheet) { shouldPresentQuotesSheet.toggle() }
+        })
+        .sheet(isPresented: $shouldPresentQuotesSheet){
+        } content: {
+            ZStack{
+                QuotesPage(name: friend.name, profilePicture: friend.profilePicture, friendID: friend.id, quotes: $friendQuotes, shouldPresentAddNewSheet: $shouldPresentAddNewQuoteSheet, sortByYear: $sortQuotesByYear, isShown: $shouldPresentQuotesSheet)
+                    .padding(-1)
+                VStack{
+                    ZStack{
+                        Rectangle()
+                            .foregroundStyle(.bar)
+                            .frame(height: 50)
+                        HStack{
+                            Text(friend.name+"'s quotes")
+                            Spacer()
+                            QuoteSortButton(sortByYear: $sortQuotesByYear)
+                            Button(action: {
+                                shouldPresentAddNewQuoteSheet.toggle()
+                            }, label: {
+                                Image(systemName: "plus")
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 10)
+                            })
+                            Button("Done") { shouldPresentQuotesSheet.toggle() }
+                        }
+                        .padding(.horizontal, 15)
+                    }
+                    Spacer()
+                }
+                .shadow(radius: 5)
+            }
+        }
     }
 }
 
@@ -122,6 +165,6 @@ extension View {
 }
 
 
-#Preview {
+/*#Preview {
     QuotesWidget(name: "Lara Croft", quote: Friend.Quote(id: 00000, text: "fheuw ferw gre fgre fer wqef ewfewfewfewf ewf ew few fewfewfewf fewewfwef ewfewf ewf ewfewfewfew ewfewfewfew", year: 2018), profilePicture: Image("1001_00"), useTransparency: false)
-}
+}*/

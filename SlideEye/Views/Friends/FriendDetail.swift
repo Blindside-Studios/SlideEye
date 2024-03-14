@@ -74,112 +74,13 @@ struct FriendDetail: View {
                 }
                 
                 ClockWidget(timeZoneID: friend.timeZoneID)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
-                    .shadow(radius: 10)
                 
-                NotesWidget(notes: $friendNotes)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
-                    .shadow(radius: 10)
-                    .gesture(TapGesture().onEnded{
-                        shouldPresentNotesSheet.toggle()
-                    })
-                    .sheet(isPresented: $shouldPresentNotesSheet){
-                    } content: {
-                        ZStack{
-                            NotesPage(friendName: friend.name, backgroundImage: friend.profilePicture, notes: $friendNotes)
-                                .padding(-1)
-                            VStack{
-                                ZStack{
-                                    Rectangle()
-                                        .foregroundStyle(.bar)
-                                        .frame(height: 50)
-                                    HStack{
-                                        Text(friend.name+"'s notes")
-                                        Spacer()
-                                        Button("Done") { shouldPresentNotesSheet.toggle(); updateFriendsList() }
-                                    }
-                                    .padding(15)
-                                }
-                                Spacer()
-                            }
-                            .shadow(radius: 5)
-                        }
-                    }
+                NotesWidget(friendName: friend.name, profilePicture: friend.profilePicture, notes: $friendNotes, shouldPresentNotesSheet: $shouldPresentNotesSheet)
                 
-                QuotesWidget(name: friend.name, quote: friend.quotes[0], profilePicture: friend.profilePicture, useTransparency: true)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
-                    .shadow(radius: 10)
-                    .gesture(TapGesture().onEnded {
-                        shouldPresentQuotesSheet.toggle()
-                    })
-                    .sheet(isPresented: $shouldPresentQuotesSheet){
-                    } content: {
-                        ZStack{
-                            QuotesPage(name: friend.name, profilePicture: friend.profilePicture, friendID: friend.id, quotes: $friendQuotes, shouldPresentAddNewSheet: $shouldPresentAddNewQuoteSheet, sortByYear: $sortQuotesByYear, isShown: $shouldPresentQuotesSheet)
-                                .padding(-1)
-                            VStack{
-                                ZStack{
-                                    Rectangle()
-                                        .foregroundStyle(.bar)
-                                        .frame(height: 50)
-                                    HStack{
-                                        Text(friend.name+"'s quotes")
-                                        Spacer()
-                                        QuoteSortButton(sortByYear: $sortQuotesByYear)
-                                        Button(action: {
-                                            shouldPresentAddNewQuoteSheet.toggle()
-                                        }, label: {
-                                            Image(systemName: "plus")
-                                                .padding(.horizontal, 5)
-                                                .padding(.vertical, 10)
-                                        })
-                                        Button("Done") { shouldPresentQuotesSheet.toggle() }
-                                    }
-                                    .padding(.horizontal, 15)
-                                }
-                                Spacer()
-                            }
-                            .shadow(radius: 5)
-                        }
-                        .onChange(of: friendQuotes, {modelData.friends[friendIndex].quotes = friendQuotes; modelData.saveLocalChanges()})
-                    }
+                QuotesWidget(name: friend.name, quote: friend.quotes[0], profilePicture: friend.profilePicture, useTransparency: true, friend: friend, friendQuotes: $friendQuotes, shouldPresentQuotesSheet: $shouldPresentQuotesSheet, shouldPresentAddNewQuoteSheet: $shouldPresentAddNewQuoteSheet, sortQuotesByYear: .constant(false), allowSheet: true)
                 
-                MapView(coordinate: friend.locationCoordinate)
-                    .frame(height: 200)
-                    .cornerRadius(25)
-                    .padding(.horizontal, 15)
-                    .padding(.vertical, 5)
-                    .shadow(radius: 10)
-                    .saturation( colorScheme == .dark ?  0.7: 0.1)
-                    .opacity(0.85)
-                    .gesture(TapGesture().onEnded {
-                        shouldPresentMapSheet.toggle()
-                    })
-                    .sheet(isPresented: $shouldPresentMapSheet){
-                    } content: {
-                        ZStack{
-                            MapView(coordinate: friend.locationCoordinate)
-                                .padding(-1)
-                            VStack{
-                                ZStack{
-                                    Rectangle()
-                                        .foregroundStyle(.bar)
-                                        .frame(height: 50)
-                                    HStack{
-                                        Text(friend.name+"'s location")
-                                        Spacer()
-                                        Button("Done") { shouldPresentMapSheet.toggle() }
-                                    }
-                                    .padding(.horizontal, 15)
-                                }
-                                Spacer()
-                            }
-                            .shadow(radius: 5)
-                        }
-                    }
+                MapView(coordinate: friend.locationCoordinate, friendName: friend.name, shouldPresentMapSheet: $shouldPresentMapSheet)
+                
             }
             .navigationTitle(friend.name)
             .navigationBarTitleDisplayMode(.large)
@@ -188,7 +89,16 @@ struct FriendDetail: View {
                     FavoriteButton(isSet: $modelData.friends[friendIndex].isFavorite)
                 }
             }
-            .onChange(of: modelData.friends[friendIndex].isFavorite, {modelData.saveLocalChanges()})
+            .onChange(of: modelData.friends[friendIndex].isFavorite, {
+                modelData.saveLocalChanges()
+            })
+            .onChange(of: friendNotes, {
+                modelData.friends[friendIndex].notes = friendNotes
+                modelData.saveLocalChanges()
+            })
+            .onChange(of: friendQuotes, {
+                modelData.friends[friendIndex].quotes = friendQuotes
+                modelData.saveLocalChanges()})
         }
     }
 }

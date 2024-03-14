@@ -26,7 +26,8 @@ struct QuotesSharePage: View {
     
     var body: some View {
         VStack{
-            let widget = QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: false).frame(width: 400, height: 200)
+            let widget = QuotesWidget(name: name, quote: quote, profilePicture: profilePicture, useTransparency: false, friend: Friend(id: 000, quotes: []), friendQuotes: .constant([Friend.Quote(id: 0, text: "qwerty", year: 0)]), shouldPresentQuotesSheet: .constant(false), shouldPresentAddNewQuoteSheet: .constant(false), sortQuotesByYear: .constant(false), allowSheet: false).frame(width: 400, height: 200)
+            
             widget
             
             Button(action: {sharePNGImage(widget,
