@@ -99,6 +99,10 @@ struct FriendsList: View {
                     { friend in
                         FriendRow(friend: friend)
                     }
+                    // TODO: This is shit - it should not be shit.
+                    .onMove { (source: IndexSet, destination: Int) in
+                        modelData.friends.move(fromOffsets: source, toOffset: destination)
+                    }
                 }
                 
                 Section(){
@@ -132,6 +136,9 @@ struct FriendsList: View {
             .animation(.default, value: filteredFriends)
             .navigationTitle("My friends")
             .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     FavoriteButton(isSet: $sortByFavorites)
                 }
@@ -176,15 +183,6 @@ struct FriendsList: View {
                 .shadow(radius: 10)
             }
         }
-        
-        // TODO: this does not work, fix it, miraculix
-        .toolbar(content: {
-            EditButton()
-            FavoriteButton(isSet: $sortByFavorites)
-                .gesture(TapGesture().onEnded {
-                    sortByFavorites.toggle()
-                })
-        })
     }
 }
 

@@ -5,12 +5,14 @@ struct FavoriteButton: View {
     
     var body: some View {
         Button {
-                    isSet.toggle()
-                } label: {
-                    Label("Toggle Favorite", systemImage: isSet ? "star.fill" : "star")
-                        .labelStyle(.iconOnly)
-                        .foregroundStyle(isSet ? .blue: .gray)
-                }
+            withAnimation(.easeOut(duration: 1)) {
+                isSet.toggle()
+            }
+        } label: {
+            Label("Toggle Favorite", systemImage: isSet ? "star.fill" : "star")
+                .labelStyle(.iconOnly)
+                .foregroundStyle(isSet ? .blue: .gray)
+        }
     }
 }
 
