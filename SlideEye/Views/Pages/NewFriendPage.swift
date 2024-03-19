@@ -36,8 +36,8 @@ struct NewFriendPage: View {
                 Section("Name"){
                     TextField("Name", text: $friendDetails.name)
                 }
-                .padding(.vertical, 30)
-                .offset(y: 30)
+                //.padding(.vertical, 30)
+                //.offset(y: 30)
                 
                 Section("Profile Picture"){
                     ZStack
@@ -100,6 +100,7 @@ struct NewFriendPage: View {
                 }
             }
         }
+        .padding(.top, 50)
         .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
                     PhotoPicker(image: self.$inputImage)
                 }
